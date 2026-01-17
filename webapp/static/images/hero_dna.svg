@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="1200" height="360">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a" stop-opacity="0.0"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.35"/>
+    </linearGradient>
+    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+    </filter>
+  </defs>
+  <rect x="0" y="0" width="1200" height="360" fill="url(#g2)"/>
+  <!-- DNA-like waves -->
+  <path d="M0,220 C150,180 250,260 400,220 C550,180 650,260 800,220 C950,180 1050,260 1200,220" fill="none" stroke="url(#g1)" stroke-width="10" filter="url(#soft)"/>
+  <path d="M0,160 C150,200 250,120 400,160 C550,200 650,120 800,160 C950,200 1050,120 1200,160" fill="none" stroke="#60a5fa" stroke-opacity="0.6" stroke-width="6"/>
+  <!-- vertical tick marks resembling bases -->
+  <g stroke="#38bdf8" stroke-width="3" stroke-linecap="round" opacity="0.5">
+    <line x1="80" x2="80" y1="130" y2="230"/>
+    <line x1="160" x2="160" y1="140" y2="220"/>
+    <line x1="240" x2="240" y1="120" y2="240"/>
+    <line x1="320" x2="320" y1="135" y2="225"/>
+    <line x1="400" x2="400" y1="125" y2="235"/>
+    <line x1="480" x2="480" y1="140" y2="220"/>
+    <line x1="560" x2="560" y1="120" y2="240"/>
+    <line x1="640" x2="640" y1="130" y2="230"/>
+    <line x1="720" x2="720" y1="140" y2="220"/>
+    <line x1="800" x2="800" y1="120" y2="240"/>
+    <line x1="880" x2="880" y1="135" y2="225"/>
+    <line x1="960" x2="960" y1="125" y2="235"/>
+    <line x1="1040" x2="1040" y1="140" y2="220"/>
+  </g>
+</svg>

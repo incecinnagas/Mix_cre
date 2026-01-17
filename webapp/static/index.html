@@ -1,0 +1,2702 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="version" content="2.0.1" />
+    <meta name="description" content="Plant Genomic CRE Analysis Platform - AI-powered cis-regulatory element prediction and analysis for rice, Arabidopsis, maize, and tomato" />
+    <meta name="keywords" content="CRE, genomics, bioinformatics, gene expression, promoter analysis, AI, deep learning" />
+    <meta name="author" content="Agricultural Information Institute of CAAS & National Nanfan Research Institute of CAAS" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Mix_cre | Plant Genomic CRE Analysis Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+      :root{
+        /* ===== FRESH GREEN GRADIENT COLOR SCHEME ===== */
+        /* Primary Brand Colors (Green) */
+        --brand-50: #ecfdf5;
+        --brand-100: #d1fae5;
+        --brand-200: #a7f3d0;
+        --brand-300: #6ee7b7;
+        --brand-400: #34d399;
+        --brand-500: #10b981;
+        --brand-600: #059669;
+        --brand-700: #047857;
+        --brand-800: #065f46;
+        --brand-900: #064e3b;
+        
+        /* Accent Color Scale (Teal/Cyan) */
+        --accent-50: #f0fdfa;
+        --accent-100: #ccfbf1;
+        --accent-200: #99f6e4;
+        --accent-300: #5eead4;
+        --accent-400: #2dd4bf;
+        --accent-500: #14b8a6;
+        --accent-600: #0d9488;
+        
+        /* Secondary Accent (Lime for highlights) */
+        --emerald-400: #a3e635;
+        --emerald-500: #84cc16;
+        --emerald-600: #65a30d;
+        
+        /* Neutral Color Scale - Green tinted */
+        --gray-50: #f0fdf4;
+        --gray-100: #dcfce7;
+        --gray-200: #bbf7d0;
+        --gray-300: #86efac;
+        --gray-400: #4ade80;
+        --gray-500: #22c55e;
+        --gray-600: #16a34a;
+        --gray-700: #15803d;
+        --gray-800: #166534;
+        --gray-900: #14532d;
+        
+        /* Semantic Colors */
+        --success: #10b981;
+        --success-light: #d1fae5;
+        --warning: #f59e0b;
+        --warning-light: #fef3c7;
+        --error: #ef4444;
+        --error-light: #fee2e2;
+        --info: #14b8a6;
+        --info-light: #ccfbf1;
+        
+        /* Legacy Variables (for compatibility) - Green gradient backgrounds */
+        --bg: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #a7f3d0 100%);
+        --bg-solid: #ecfdf5;
+        --panel: linear-gradient(145deg, rgba(236, 253, 245, 0.9) 0%, rgba(209, 250, 229, 0.8) 100%);
+        --border: rgba(16, 185, 129, 0.25);
+        --border-light: rgba(16, 185, 129, 0.15);
+        --text: #064e3b;
+        --text-secondary: #065f46;
+        --muted: #047857;
+        --brand: var(--brand-600);
+        --brand-hover: var(--brand-700);
+        --brand-light: var(--brand-500);
+        --accent: var(--accent-500);
+        --accent-light: var(--brand-100);
+        --accent-secondary: var(--emerald-500);
+        
+        /* Spacing Scale */
+        --space-1: 4px;
+        --space-2: 8px;
+        --space-3: 12px;
+        --space-4: 16px;
+        --space-5: 20px;
+        --space-6: 24px;
+        --space-8: 32px;
+        --space-10: 40px;
+        --space-12: 48px;
+        --space-16: 64px;
+        
+        /* Border Radius Scale */
+        --radius-sm: 6px;
+        --radius: 12px;
+        --radius-md: 12px;
+        --radius-lg: 16px;
+        --radius-xl: 24px;
+        --radius-2xl: 32px;
+        --radius-full: 9999px;
+        
+        /* Shadow Scale */
+        --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+        --shadow-sm: 0 2px 4px rgba(0,0,0,0.06);
+        --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+        --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+        --shadow-lg: 0 10px 25px -5px rgb(0 0 0 / 0.1), 0 4px 10px -6px rgb(0 0 0 / 0.05);
+        --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+        --shadow-2xl: 0 32px 64px -16px rgba(0,0,0,0.2);
+        --shadow-glow: 0 0 40px rgba(16, 185, 129, 0.15);
+        --shadow-glow-lg: 0 0 60px rgba(16, 185, 129, 0.2);
+        --shadow-brand: 0 4px 14px rgba(5, 150, 105, 0.25);
+        --shadow-brand-lg: 0 8px 24px rgba(5, 150, 105, 0.3);
+        
+        /* Animation Timing */
+        --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+        --ease-in: cubic-bezier(0.4, 0, 1, 1);
+        --ease-out: cubic-bezier(0, 0, 0.2, 1);
+        --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        
+        /* Transition Durations */
+        --duration-fast: 150ms;
+        --duration-normal: 250ms;
+        --duration-slow: 400ms;
+        --transition-fast: 0.15s var(--ease-default);
+        --transition: 0.25s var(--ease-default);
+        --transition-slow: 0.4s var(--ease-default);
+      }
+      *{ box-sizing: border-box; margin: 0; padding: 0; }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        margin: 0;
+        background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 30%, #a7f3d0 60%, #6ee7b7 100%);
+        background-attachment: fixed;
+        color: var(--text);
+        line-height: 1.7;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        transition: background-color var(--transition-slow), color var(--transition-slow);
+      }
+      
+      /* Reduced motion preference */
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* ===== TOP BANNER WITH LOGOS ===== */
+      .top-banner {
+        background: linear-gradient(180deg, rgba(236, 253, 245, 0.95) 0%, rgba(209, 250, 229, 0.9) 100%);
+        border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+        padding: var(--space-3) var(--space-6);
+        position: relative;
+        backdrop-filter: blur(10px);
+      }
+      .top-banner::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--brand-400), var(--accent-400), transparent);
+      }
+      .top-banner-inner {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-6);
+      }
+      .institution-logo {
+        height: 48px;
+        width: auto;
+        object-fit: contain;
+        transition: transform var(--transition), filter var(--transition);
+      }
+      .institution-logo:hover {
+        transform: scale(1.02);
+        filter: brightness(1.05);
+      }
+      @media (max-width: 768px) {
+        .institution-logo { height: 36px; }
+        .top-banner { padding: var(--space-2) var(--space-4); }
+        .top-banner-inner { flex-wrap: wrap; gap: var(--space-3); }
+      }
+
+      /* ===== SMOOTH SCROLL ===== */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* ===== HEADER ===== */
+      header{
+        padding: 80px var(--space-6) 72px;
+        background: linear-gradient(135deg, #064e3b 0%, #065f46 25%, #047857 50%, #059669 75%, #10b981 100%);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+          url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+          linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.03) 100%);
+        opacity: 1;
+      }
+      /* Floating orbs in header */
+      header::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image:
+          radial-gradient(circle at 10% 90%, rgba(52, 211, 153, 0.3) 0%, transparent 35%),
+          radial-gradient(circle at 90% 10%, rgba(45, 212, 191, 0.25) 0%, transparent 35%),
+          radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 45%),
+          radial-gradient(circle at 70% 80%, rgba(163, 230, 53, 0.15) 0%, transparent 30%);
+        animation: orbFloat 15s ease-in-out infinite alternate;
+        pointer-events: none;
+      }
+      @keyframes orbFloat {
+        0% { opacity: 0.6; transform: translateY(0) scale(1); }
+        50% { opacity: 0.8; transform: translateY(-5px) scale(1.01); }
+        100% { opacity: 1; transform: translateY(-10px) scale(1.02); }
+      }
+      header .header-content {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      header h1 {
+        margin: 0 0 var(--space-3) 0;
+        font-weight: 800;
+        font-size: clamp(36px, 6vw, 56px);
+        color: #fff;
+        letter-spacing: -1.5px;
+        text-shadow: 0 4px 24px rgba(0,0,0,0.25);
+        animation: titleFadeIn 0.8s var(--ease-out);
+      }
+      @keyframes titleFadeIn {
+        from { opacity: 0; transform: translateY(-30px) scale(0.95); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      header h1 span.brand {
+        background: linear-gradient(120deg, var(--brand-300), var(--brand-200), var(--accent-300), var(--brand-300));
+        background-size: 300% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: shimmerText 6s ease-in-out infinite;
+      }
+      @keyframes shimmerText {
+        0%, 100% { background-position: 0% center; }
+        50% { background-position: 100% center; }
+      }
+      header .subtitle {
+        font-size: clamp(16px, 2.5vw, 20px);
+        color: rgba(255,255,255,0.95);
+        font-weight: 500;
+        margin-bottom: var(--space-6);
+        letter-spacing: 0.5px;
+        animation: subtitleFadeIn 0.8s var(--ease-out) 0.15s backwards;
+      }
+      @keyframes subtitleFadeIn {
+        from { opacity: 0; transform: translateY(-15px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      header p.desc {
+        color: rgba(255,255,255,0.9);
+        font-size: clamp(14px, 2vw, 16px);
+        margin: var(--space-5) auto 0;
+        max-width: 800px;
+        line-height: 1.8;
+        animation: descFadeIn 0.8s var(--ease-out) 0.3s backwards;
+      }
+      @keyframes descFadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      main{ padding: var(--space-12) var(--space-6); max-width: 1400px; margin: 0 auto; }
+
+      /* ===== NAVIGATION ===== */
+      .nav{
+        display: flex;
+        gap: var(--space-2);
+        flex-wrap: wrap;
+        padding: var(--space-2);
+        margin-bottom: var(--space-10);
+        justify-content: center;
+        background: linear-gradient(145deg, rgba(236, 253, 245, 0.9) 0%, rgba(209, 250, 229, 0.85) 100%);
+        border-radius: var(--radius-full);
+        box-shadow: var(--shadow-md), 0 0 0 1px rgba(16, 185, 129, 0.15);
+        max-width: 340px;
+        margin-left: auto;
+        margin-right: auto;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        position: relative;
+        overflow: hidden;
+      }
+      .nav::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(167, 243, 208, 0.3) 0%, rgba(209, 250, 229, 0) 100%);
+        pointer-events: none;
+      }
+      .nav a{
+        padding: var(--space-3) var(--space-6);
+        border: none;
+        border-radius: var(--radius-full);
+        text-decoration: none;
+        color: var(--muted);
+        background: transparent;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all var(--transition);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .nav a:hover{
+        color: var(--brand-600);
+        background: rgba(16, 185, 129, 0.15);
+        transform: translateY(-1px);
+      }
+      .nav a.active{
+        background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-700) 100%);
+        color: #fff;
+        box-shadow: var(--shadow-brand);
+        transform: scale(1.02);
+      }
+      .nav a.active:hover {
+        transform: scale(1.02) translateY(-1px);
+        box-shadow: var(--shadow-brand-lg);
+      }
+      .section{ display:none; }
+
+      /* ===== FORM ELEMENTS ===== */
+      textarea {
+        width: 100%;
+        height: 180px;
+        font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        border-radius: var(--radius);
+        padding: 16px;
+        transition: all 0.2s ease;
+        font-size: 14px;
+        line-height: 1.6;
+        resize: vertical;
+        background: linear-gradient(145deg, rgba(236, 253, 245, 0.9) 0%, rgba(209, 250, 229, 0.7) 100%);
+      }
+      textarea:focus{
+        outline: none;
+        border-color: var(--brand-500);
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+        background: linear-gradient(145deg, rgba(236, 253, 245, 1) 0%, rgba(209, 250, 229, 0.9) 100%);
+      }
+      body.dark textarea:focus{
+        background: rgba(6,78,59,0.5);
+        box-shadow: 0 0 0 3px rgba(52,211,153,0.2);
+      }
+
+      /* ===== LAYOUT ===== */
+      .row {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+        position: relative;
+      }
+      .col { flex: 1; min-width: 320px; }
+
+      /* ===== CARDS ===== */
+      .card {
+        background: linear-gradient(145deg, rgba(236, 253, 245, 0.95) 0%, rgba(209, 250, 229, 0.85) 100%);
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        border-radius: var(--radius-lg);
+        padding: var(--space-6);
+        box-shadow: var(--shadow), 0 0 20px rgba(16, 185, 129, 0.08);
+        transition: all var(--transition);
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(8px);
+      }
+      .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--brand-500), var(--accent-500), var(--emerald-500));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--transition);
+      }
+      .card:hover{
+        box-shadow: var(--shadow-lg), 0 0 30px rgba(16, 185, 129, 0.15);
+        transform: translateY(-4px);
+        border-color: var(--brand-400);
+        background: linear-gradient(145deg, rgba(236, 253, 245, 1) 0%, rgba(209, 250, 229, 0.95) 100%);
+      }
+      .card:hover::before {
+        transform: scaleX(1);
+      }
+
+      /* ===== BUTTONS ===== */
+      .btn {
+        padding: var(--space-3) var(--space-6);
+        border: none;
+        border-radius: var(--radius-md);
+        background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-700) 100%);
+        color: #fff;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-brand), inset 0 1px 0 rgba(255,255,255,0.15);
+        text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        min-height: 44px;
+        min-width: 44px;
+      }
+      .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.5s var(--ease-default);
+      }
+      .btn:hover::before {
+        left: 100%;
+      }
+      .btn:hover{
+        background: linear-gradient(135deg, var(--brand-500) 0%, var(--brand-600) 100%);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-brand-lg);
+      }
+      .btn:active{
+        transform: translateY(0) scale(0.98);
+        box-shadow: var(--shadow-brand);
+        transition-duration: 0.1s;
+      }
+      .btn:focus-visible {
+        outline: 2px solid var(--brand-300);
+        outline-offset: 2px;
+      }
+      .btn.secondary{
+        background: linear-gradient(145deg, rgba(236, 253, 245, 0.95) 0%, rgba(209, 250, 229, 0.85) 100%);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        color: var(--text-secondary);
+        box-shadow: var(--shadow-xs);
+        text-shadow: none;
+      }
+      .btn.secondary:hover{
+        background: linear-gradient(135deg, var(--brand-100) 0%, var(--brand-200) 100%);
+        border-color: var(--brand-400);
+        color: var(--brand-700);
+        box-shadow: var(--shadow-sm), 0 0 0 1px var(--brand-300);
+        transform: translateY(-2px);
+      }
+      .btn.secondary:active {
+        transform: translateY(0) scale(0.98);
+      }
+      .btn:disabled {
+        background: var(--gray-100);
+        color: var(--gray-400);
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+        border: 1px solid var(--gray-200);
+      }
+      .btn:disabled:hover {
+        transform: none;
+      }
+      .btn:disabled::before {
+        display: none;
+      }
+      body.dark .btn.secondary{
+        background: rgba(45, 212, 191, 0.1);
+        border-color: rgba(45, 212, 191, 0.3);
+        color: var(--brand-300);
+      }
+      body.dark .btn.secondary:hover{
+        background: var(--brand);
+        color: var(--brand-900);
+      }
+      .muted { color: var(--muted); font-size: 13px; line-height:1.6; }
+      body.dark .muted{ color:#a7f3d0; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; }
+      h3{ font-size:20px; font-weight:700; color:var(--text); margin:0 0 20px 0; letter-spacing:0.3px; }
+      h4{ font-size:18px; font-weight:600; color:var(--text); margin:20px 0 12px 0; }
+      body.dark h3, body.dark h4{ color:#ecfdf5; }
+      .inline { display: inline-block; margin-right: 12px; }
+      .err { color: #ef4444; font-weight:600; }
+      .ok { color: #10b981; font-weight:600; }
+      body.dark .ok{ color: #6ee7b7; }
+      body.dark .err{ color: #fca5a5; }
+      .toolbar{ display:flex; align-items:center; gap:12px; margin-top:16px; flex-wrap:wrap; padding:16px; background:rgba(16,185,129,0.03); border-radius:12px; border:1px dashed var(--border); }
+      body.dark .toolbar{ background:rgba(6,78,59,0.3); border-color:rgba(52,211,153,0.3); }
+      .toolbar label{ display:flex; align-items:center; gap:6px; cursor:pointer; user-select:none; padding:6px 12px; border-radius:8px; transition:background 0.2s ease; }
+      .toolbar label:hover{ background:rgba(16,185,129,0.08); }
+      body.dark .toolbar label:hover{ background:rgba(52,211,153,0.15); }
+      .toolbar input[type='checkbox']{ cursor:pointer; width:16px; height:16px; }
+      .toolbar input[type='number']{ border:1px solid var(--border); border-radius:6px; padding:6px 10px; font-size:13px; transition:border-color 0.2s ease; }
+      .toolbar input[type='number']:focus{ outline:none; border-color:var(--brand); box-shadow:0 0 0 3px rgba(16,185,129,0.1); }
+      body.dark .toolbar input[type='number']{ background:rgba(6,78,59,0.4); color:#ecfdf5; border-color:rgba(52,211,153,0.3); }
+      .spinner{ display:none; width:18px; height:18px; border:2px solid #fff3; border-top-color:#fff; border-radius:50%; animation:spin .8s linear infinite; }
+      @keyframes spin{ to{ transform: rotate(360deg);} }
+      .viz-bar{ height:20px; background:linear-gradient(90deg, #e5e7eb 0%, #93c5fd 50%, #a7f3d0 100%); border-radius:4px; margin:4px 0; position:relative; }
+      .viz-label{ position:absolute; left:8px; top:2px; font-size:11px; color:#0f172a; text-shadow:0 1px 2px rgba(255,255,255,0.5); }
+      .seq-char{ display:inline-block; padding:2px 2px; margin:0; font-weight:800; letter-spacing:.2px; transition:transform .15s ease; -webkit-text-stroke:0.6px rgba(0,0,0,0.25); text-shadow:0 1px 2px rgba(0,0,0,0.15); border-radius:4px; }
+      .seq-char:hover{ transform:scale(1.15) rotate(-1deg); z-index:10; position:relative; }
+      .chart-container{ position:relative; height:400px; margin:16px 0; background:transparent; border-radius:8px; padding:16px; }
+      .export-btn{ margin-top:12px; }
+      header .actions{ margin-top:18px; display:flex; gap:12px; justify-content:center; }
+      header .header-top{ display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
+      header .header-top h2{ margin:0; }
+      /* Dark theme - Modern Dark Green */
+      body.dark{
+        --bg-solid: #022c22;
+        --panel: rgba(6, 78, 59, 0.95);
+        --border: rgba(52, 211, 153, 0.15);
+        --border-light: rgba(52, 211, 153, 0.1);
+        --text: #ecfdf5;
+        --text-secondary: #d1fae5;
+        --muted: #6ee7b7;
+        --brand: var(--brand-400);
+        --brand-hover: var(--brand-500);
+        --brand-light: var(--brand-300);
+        --accent: var(--accent-400);
+        --accent-light: rgba(52, 211, 153, 0.15);
+        --accent-secondary: var(--emerald-400);
+        background: linear-gradient(180deg, #022c22 0%, #064e3b 50%, #065f46 100%);
+        color: var(--text);
+      }
+      body.dark header{ 
+        background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #10b981 100%); 
+      }
+      body.dark .card{ 
+        background: rgba(6, 78, 59, 0.8); 
+        box-shadow: 0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05); 
+        border-color: rgba(52, 211, 153, 0.2); 
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      body.dark .card:hover {
+        background: rgba(6, 78, 59, 0.9);
+        border-color: rgba(52, 211, 153, 0.35);
+      }
+      body.dark .nav { 
+        background: rgba(6, 78, 59, 0.8); 
+        border-color: rgba(52, 211, 153, 0.25);
+        box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+      }
+      body.dark .nav a{ color: var(--brand-200); }
+      body.dark .nav a:hover{ 
+        background: rgba(52, 211, 153, 0.2); 
+        color: var(--brand-300); 
+      }
+      body.dark .nav a.active{ 
+        background: linear-gradient(135deg, var(--brand-400) 0%, var(--brand-500) 100%); 
+        color: #022c22; 
+        font-weight: 700; 
+      }
+      body.dark textarea{ 
+        background: rgba(6, 78, 59, 0.6); 
+        color: #ecfdf5; 
+        border-color: rgba(52, 211, 153, 0.3); 
+      }
+      body.dark textarea:focus {
+        background: rgba(6, 78, 59, 0.8);
+        border-color: var(--brand-400);
+        box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.2);
+      }
+      .hero-img{ width:100%; max-width:500px; display:block; margin:24px auto; filter:drop-shadow(0 4px 12px rgba(16,185,129,0.2)); }
+      .stat-badge{ display:inline-flex; align-items:center; gap:6px; padding:6px 14px; background:rgba(16,185,129,0.1); border:1px solid var(--border); border-radius:20px; font-size:13px; font-weight:600; color:var(--brand); margin:4px; }
+      body.dark .stat-badge{ background:rgba(52,211,153,0.15); border-color:rgba(52,211,153,0.3); color:#6ee7b7; }
+      .section-divider{ height:1px; background:linear-gradient(90deg, transparent 0%, var(--border) 50%, transparent 100%); margin:32px 0; }
+      @keyframes fadeInUp{ from{ opacity:0; transform:translateY(20px); } to{ opacity:1; transform:translateY(0); } }
+      .illus{ max-width:160px; width:100%; opacity:.9; display:block; }
+
+      /* ===== HOME PAGE HERO ===== */
+      .home-hero {
+        text-align: center;
+        padding: var(--space-16) var(--space-10);
+        background: linear-gradient(145deg, rgba(236, 253, 245, 0.95) 0%, rgba(209, 250, 229, 0.9) 50%, rgba(167, 243, 208, 0.85) 100%);
+        border-radius: var(--radius-2xl);
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        margin-bottom: var(--space-12);
+        box-shadow:
+          var(--shadow-sm),
+          var(--shadow-lg),
+          0 0 40px rgba(16, 185, 129, 0.12);
+        position: relative;
+        overflow: hidden;
+        animation: heroFadeIn 0.7s var(--ease-out);
+      }
+      .home-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--brand-500), var(--accent-500), var(--emerald-500), var(--brand-500));
+        background-size: 300% 100%;
+        animation: gradientFlow 10s ease infinite;
+      }
+      .home-hero::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+          radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 40%),
+          radial-gradient(circle at 80% 20%, rgba(20, 184, 166, 0.08) 0%, transparent 40%);
+        pointer-events: none;
+      }
+      @keyframes gradientFlow {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+      @keyframes heroFadeIn {
+        from { opacity: 0; transform: translateY(30px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-5);
+        background: linear-gradient(135deg, var(--brand-50) 0%, var(--brand-100) 100%);
+        color: var(--brand-700);
+        font-size: 11px;
+        font-weight: 700;
+        border-radius: var(--radius-full);
+        margin-bottom: var(--space-6);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        border: 1px solid var(--brand-200);
+        position: relative;
+        z-index: 1;
+        box-shadow: var(--shadow-xs);
+      }
+      .hero-badge::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--brand-500);
+        animation: badgeDot 2s ease-in-out infinite;
+        box-shadow: 0 0 8px var(--brand-400);
+      }
+      @keyframes badgeDot {
+        0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px var(--brand-400); }
+        50% { opacity: 0.6; transform: scale(0.85); box-shadow: 0 0 4px var(--brand-400); }
+      }
+      .hero-title {
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 800;
+        color: var(--text);
+        margin: 0 0 var(--space-5) 0;
+        line-height: 1.2;
+        letter-spacing: -0.5px;
+        position: relative;
+        z-index: 1;
+      }
+      .hero-desc {
+        font-size: clamp(15px, 2vw, 17px);
+        color: var(--muted);
+        max-width: 700px;
+        margin: 0 auto var(--space-10);
+        line-height: 1.8;
+        position: relative;
+        z-index: 1;
+      }
+      .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-6);
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 1;
+      }
+      .stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: var(--space-6) var(--space-8);
+        background: linear-gradient(145deg, rgba(236, 253, 245, 0.95) 0%, rgba(209, 250, 229, 0.85) 100%);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        transition: all var(--transition);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        min-width: 150px;
+      }
+      .stat-item:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: var(--shadow-lg), 0 0 20px rgba(16, 185, 129, 0.15);
+        border-color: var(--brand-400);
+        background: linear-gradient(145deg, rgba(236, 253, 245, 1) 0%, rgba(209, 250, 229, 0.95) 100%);
+      }
+      .stat-number {
+        font-size: clamp(32px, 4vw, 40px);
+        font-weight: 800;
+        color: var(--brand);
+        line-height: 1;
+        background: linear-gradient(135deg, var(--brand-600) 0%, var(--accent-500) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .stat-label {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: var(--space-3);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+      }
+      body.dark .home-hero {
+        background: linear-gradient(135deg, rgba(6, 78, 59, 0.9) 0%, rgba(6, 95, 70, 0.7) 100%);
+        border-color: rgba(52, 211, 153, 0.25);
+      }
+      body.dark .home-hero::after {
+        background: 
+          radial-gradient(circle at 20% 80%, rgba(52, 211, 153, 0.15) 0%, transparent 40%),
+          radial-gradient(circle at 80% 20%, rgba(45, 212, 191, 0.1) 0%, transparent 40%);
+      }
+      body.dark .home-hero::before {
+        background: linear-gradient(90deg, var(--brand-500), var(--accent-400), var(--emerald-500), var(--brand-500));
+        background-size: 300% 100%;
+      }
+      body.dark .hero-badge {
+        background: rgba(52, 211, 153, 0.2);
+        color: var(--brand-300);
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      body.dark .hero-badge::before { 
+        background: var(--brand-300); 
+        box-shadow: 0 0 8px var(--brand-400);
+      }
+      body.dark .hero-title { color: #f8fafc; }
+      body.dark .hero-desc { color: var(--brand-200); }
+      body.dark .stat-item {
+        background: rgba(6, 78, 59, 0.7);
+        border-color: rgba(52, 211, 153, 0.25);
+      }
+      body.dark .stat-item:hover {
+        background: rgba(6, 78, 59, 0.85);
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      body.dark .stat-number { -webkit-text-fill-color: var(--brand-300); }
+      body.dark .stat-label { color: var(--brand-200); }
+
+      /* ===== SPECIES SHOWCASE ===== */
+      .species-showcase {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-5);
+        flex-wrap: wrap;
+        margin: var(--space-8) 0;
+        padding: var(--space-6);
+        background: linear-gradient(135deg, rgba(209, 250, 229, 0.6) 0%, rgba(167, 243, 208, 0.5) 100%);
+        border-radius: var(--radius-xl);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        position: relative;
+        z-index: 1;
+      }
+      .species-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-5) var(--space-6);
+        border-radius: var(--radius-lg);
+        background: linear-gradient(145deg, rgba(236, 253, 245, 0.95) 0%, rgba(209, 250, 229, 0.85) 100%);
+        box-shadow: var(--shadow-xs);
+        transition: all var(--transition);
+        min-width: 130px;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        position: relative;
+        overflow: hidden;
+      }
+      .species-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--brand-500) 0%, var(--accent-500) 100%);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--transition);
+      }
+      .species-item:hover::before {
+        transform: scaleX(1);
+      }
+      .species-item:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: var(--shadow-lg), 0 0 20px rgba(16, 185, 129, 0.15);
+        border-color: var(--brand-400);
+      }
+      .species-icon {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform var(--transition);
+      }
+      .species-item:hover .species-icon {
+        transform: scale(1.1);
+      }
+      .species-icon svg {
+        width: 100%;
+        height: 100%;
+      }
+      .species-name {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .species-latin {
+        font-size: 11px;
+        font-style: italic;
+        color: var(--muted);
+      }
+      body.dark .species-showcase {
+        background: rgba(6, 78, 59, 0.6);
+        border-color: rgba(52, 211, 153, 0.2);
+      }
+      body.dark .species-item {
+        background: rgba(6, 78, 59, 0.7);
+        border-color: rgba(52, 211, 153, 0.2);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      }
+      body.dark .species-item:hover {
+        background: rgba(6, 78, 59, 0.85);
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      body.dark .species-name { color: #f8fafc; }
+      body.dark .species-latin { color: var(--brand-200); }
+      @media (max-width: 768px) {
+        .species-showcase { gap: var(--space-3); padding: var(--space-4); }
+        .species-item { min-width: 100px; padding: var(--space-4); }
+        .species-icon { width: 48px; height: 48px; }
+        .species-name { font-size: 12px; }
+        .species-latin { font-size: 10px; }
+      }
+
+      /* ===== FEATURES SECTION ===== */
+      .features-section {
+        margin-bottom: var(--space-12);
+      }
+      .section-title {
+        font-size: clamp(22px, 3vw, 28px);
+        font-weight: 800;
+        color: var(--text);
+        text-align: center;
+        margin-bottom: 36px;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        letter-spacing: -0.3px;
+      }
+      .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--brand) 0%, var(--accent) 100%);
+        border-radius: 2px;
+      }
+      body.dark .section-title { color: #f0fdfa; }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+      @media (max-width: 768px) {
+        .features-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+      }
+      .feature-card {
+        background: linear-gradient(145deg, rgba(236, 253, 245, 0.95) 0%, rgba(209, 250, 229, 0.85) 100%);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        border-radius: var(--radius-lg);
+        padding: var(--space-6);
+        box-shadow: var(--shadow-sm);
+        transition: all var(--transition);
+        position: relative;
+        overflow: hidden;
+        animation: cardSlideIn 0.6s var(--ease-out) forwards;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      @keyframes cardSlideIn {
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .feature-card:nth-child(1) { animation-delay: 0.08s; }
+      .feature-card:nth-child(2) { animation-delay: 0.16s; }
+      .feature-card:nth-child(3) { animation-delay: 0.24s; }
+      .feature-card:nth-child(4) { animation-delay: 0.32s; }
+      .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--brand-500) 0%, var(--accent-500) 50%, var(--emerald-500) 100%);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--transition);
+      }
+      .feature-card:hover::before {
+        transform: scaleX(1);
+      }
+      .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg), 0 0 20px rgba(16, 185, 129, 0.15);
+        border-color: var(--brand-400);
+        background: linear-gradient(145deg, rgba(236, 253, 245, 1) 0%, rgba(209, 250, 229, 0.95) 100%);
+      }
+      .feature-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: var(--space-4);
+        box-shadow: var(--shadow-md);
+        transition: transform var(--transition), box-shadow var(--transition);
+      }
+      .feature-card:hover .feature-icon {
+        transform: scale(1.1) rotate(-3deg);
+        box-shadow: var(--shadow-lg);
+      }
+      .feature-card h4 {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text);
+        margin: 0 0 var(--space-2) 0;
+      }
+      .feature-card h4::before { display: none; }
+      .feature-card > p {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.7;
+        margin: 0 0 var(--space-4) 0;
+      }
+      .feature-details {
+        background: linear-gradient(145deg, rgba(209, 250, 229, 0.5) 0%, rgba(167, 243, 208, 0.4) 100%);
+        border-radius: var(--radius);
+        padding: var(--space-4);
+        border: 1px solid rgba(16, 185, 129, 0.15);
+      }
+      .detail-item {
+        display: flex;
+        gap: var(--space-2);
+        font-size: 13px;
+        line-height: 1.6;
+        margin-bottom: var(--space-2);
+      }
+      .detail-item:last-child { margin-bottom: 0; }
+      .detail-label {
+        font-weight: 600;
+        color: var(--brand-600);
+        white-space: nowrap;
+      }
+      .detail-item > span:last-child {
+        color: var(--muted);
+      }
+      body.dark .feature-card {
+        background: rgba(6, 78, 59, 0.7);
+        border-color: rgba(52, 211, 153, 0.2);
+      }
+      body.dark .feature-card:hover {
+        background: rgba(6, 78, 59, 0.85);
+        border-color: rgba(52, 211, 153, 0.35);
+      }
+      body.dark .feature-card h4 { color: #f8fafc; }
+      body.dark .feature-card > p { color: var(--brand-200); }
+      body.dark .feature-details {
+        background: rgba(6, 78, 59, 0.5);
+        border-color: rgba(52, 211, 153, 0.15);
+      }
+      body.dark .detail-label { color: var(--brand-300); }
+      body.dark .detail-item > span:last-child { color: var(--brand-200); }
+
+      /* ===== QUICKSTART SECTION ===== */
+      .quickstart-section {
+        margin-bottom: 0;
+      }
+      .quickstart-card {
+        display: flex;
+        align-items: center;
+        gap: var(--space-6);
+        padding: var(--space-6) var(--space-8);
+        background: linear-gradient(135deg, #065f46 0%, #047857 50%, #10b981 100%);
+        border-radius: var(--radius-xl);
+        color: #fff;
+        box-shadow: var(--shadow-brand-lg), inset 0 1px 0 rgba(255,255,255,0.1);
+        position: relative;
+        overflow: hidden;
+        transition: all var(--transition);
+      }
+      .quickstart-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+          radial-gradient(circle at 0% 0%, rgba(255,255,255,0.15) 0%, transparent 50%),
+          radial-gradient(circle at 100% 100%, rgba(0,0,0,0.1) 0%, transparent 50%);
+        pointer-events: none;
+      }
+      .quickstart-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 40px rgba(14, 165, 233, 0.35);
+      }
+        position: relative;
+        overflow: hidden;
+      }
+      .quickstart-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+        pointer-events: none;
+      }
+      .quickstart-icon {
+        flex-shrink: 0;
+        width: 52px;
+        height: 52px;
+        background: rgba(255,255,255,0.15);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+      }
+      .quickstart-content {
+        flex: 1;
+        position: relative;
+        z-index: 1;
+      }
+      .quickstart-content h4 {
+        font-size: 17px;
+        font-weight: 700;
+        margin: 0 0 6px 0;
+        color: #fff;
+      }
+      .quickstart-content p {
+        font-size: 14px;
+        margin: 0;
+        opacity: 0.92;
+        line-height: 1.6;
+        color: rgba(255,255,255,0.95);
+      }
+      .quickstart-card .btn {
+        background: #fff;
+        color: var(--brand);
+        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        position: relative;
+        z-index: 1;
+      }
+      .quickstart-card .btn:hover {
+        background: #f0fdfa;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      }
+      @media (max-width: 768px) {
+        .quickstart-card {
+          flex-direction: column;
+          text-align: center;
+          padding: 28px 24px;
+        }
+        .hero-title { font-size: 26px; }
+        .hero-stats { gap: 16px; }
+        .stat-item { min-width: 110px; padding: 18px 24px; }
+        .stat-number { font-size: 28px; }
+      }
+      table{ width:100%; border-collapse:separate; border-spacing:0; margin:16px 0; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+      thead{ background:linear-gradient(135deg, var(--brand) 0%, var(--accent) 100%); color:#fff; }
+      thead th{ padding:14px 16px; font-weight:600; text-align:left; font-size:14px; letter-spacing:0.3px; }
+      tbody tr{ transition:all 0.2s ease; }
+      tbody tr:hover{ background:rgba(16,185,129,0.05); transform:scale(1.005); }
+      tbody td{ padding:12px 16px; border-bottom:1px solid var(--border); font-size:13px; }
+      tbody tr:last-child td{ border-bottom:none; }
+      body.dark table{ background:rgba(6,78,59,0.4); }
+      body.dark tbody tr:hover{ background:rgba(52,211,153,0.1); }
+      body.dark tbody td{ border-bottom-color:rgba(52,211,153,0.2); color:#d1fae5; }
+      /* Progress Bar */
+      .progress-container{ position:absolute; bottom:8px; right:24px; z-index:100; width:380px; max-width:calc(100% - 48px); background:#fff; border:2px solid var(--brand); border-radius:14px; padding:16px 18px; box-shadow:0 6px 20px rgba(16,185,129,0.2), 0 0 0 3px rgba(16,185,129,0.06); backdrop-filter:blur(8px); display:none; animation:slideInUp 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+      @media (max-width: 768px) { .progress-container{ position:fixed; bottom:16px; right:16px; left:16px; width:auto; max-width:none; } }
+      @keyframes slideInUp{ from{ opacity:0; transform:translateY(20px); } to{ opacity:1; transform:translateY(0); } }
+      body.dark .progress-container{ background:rgba(6,78,59,0.95); border-color:#34d399; box-shadow:0 8px 24px rgba(0,0,0,0.6), 0 0 0 3px rgba(52,211,153,0.12); }
+      .progress-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+      .progress-title{ font-size:15px; font-weight:700; color:var(--text); display:flex; align-items:center; gap:8px; }
+      .progress-percentage{ font-size:22px; font-weight:800; color:var(--brand); font-variant-numeric:tabular-nums; min-width:65px; text-align:right; }
+      .progress-bar-outer{ width:100%; height:10px; background:rgba(16,185,129,0.15); border-radius:20px; overflow:hidden; position:relative; box-shadow:inset 0 2px 4px rgba(0,0,0,0.08); }
+      body.dark .progress-bar-outer{ background:rgba(52,211,153,0.2); }
+      .progress-bar-inner{ height:100%; background:linear-gradient(90deg, #10b981 0%, #34d399 50%, #6ee7b7 100%); border-radius:20px; transition:width 0.3s cubic-bezier(0.4, 0, 0.2, 1); position:relative; box-shadow:0 0 10px rgba(16,185,129,0.4); animation:shimmer 2s infinite; }
+      @keyframes shimmer{ 0%, 100%{ background-position:0% 50%; } 50%{ background-position:100% 50%; } }
+      .progress-bar-inner{ background-size:200% 100%; }
+      .progress-message{ margin-top:10px; font-size:12px; color:var(--muted); text-align:center; font-weight:500; }
+      .progress-spinner{ display:inline-block; width:14px; height:14px; border:2px solid var(--brand); border-top-color:transparent; border-radius:50%; animation:spin 0.8s linear infinite; }
+      body.dark thead{ background:linear-gradient(135deg, #047857 0%, #059669 100%); }
+      .feature-card{ background: linear-gradient(135deg, #fff 0%, #f0fdf4 100%); border: 2px solid var(--border); border-radius: 16px; padding: 28px 32px; margin-bottom: 20px; box-shadow: 0 4px 16px rgba(16,185,129,0.1); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+      .feature-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:4px; background:linear-gradient(90deg, var(--brand) 0%, var(--accent) 100%); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
+      .feature-card:hover::before{ transform: scaleX(1); }
+      .feature-card:hover{ box-shadow: 0 12px 32px rgba(16,185,129,0.2); transform: translateX(8px); border-color: var(--brand); }
+      .feature-card h4{ margin: 0 0 16px 0; font-size: 23px; font-weight: 700; color: var(--brand); display:flex; align-items:center; gap:12px; }
+      .feature-card h4::before{ content:''; width:5px; height:32px; background:linear-gradient(180deg, var(--brand), var(--accent)); border-radius:3px; }
+      .feature-card p{ margin: 12px 0; color: var(--text); line-height: 1.8; font-size: 15px; }
+      .feature-card .detail{ font-size: 14px; color: var(--muted); margin-top: 16px; padding: 16px; background: rgba(16,185,129,0.03); border-radius: 10px; border-left: 3px solid var(--border); line-height: 1.8; }
+      body.dark .feature-card{ background: linear-gradient(135deg, rgba(6,95,70,0.7) 0%, rgba(6,78,59,0.5) 100%); border-color: rgba(52,211,153,0.4); }
+      body.dark .feature-card h4{ color: #6ee7b7; }
+      body.dark .feature-card p{ color: #ecfdf5; }
+      body.dark .feature-card .detail{ background: rgba(6,78,59,0.5); border-left-color: rgba(52,211,153,0.5); color: #d1fae5; }
+      #pred{ transition:all 0.3s ease; }
+      details{ margin:8px 0; padding:12px; background:rgba(16,185,129,0.03); border-radius:8px; border:1px solid var(--border); }
+      details summary{ cursor:pointer; font-weight:600; color:var(--brand); user-select:none; padding:4px; transition:color 0.2s ease; }
+      details summary:hover{ color:var(--brand-hover); }
+      details[open] summary{ margin-bottom:12px; }
+      body.dark details{ background:rgba(6,78,59,0.3); border-color:rgba(52,211,153,0.3); }
+      body.dark details summary{ color:#6ee7b7; }
+      body.dark details summary:hover{ color:#34d399; }
+      body.dark .feature-card:hover{ border-color: var(--brand); }
+      .hero{ transition:all 0.3s ease; }
+      body.dark .hero{ background:linear-gradient(135deg, rgba(6,95,70,0.4) 0%, rgba(6,78,59,0.3) 100%) !important; border-color:rgba(52,211,153,0.3) !important; }
+      body.dark .hero p{ color:#d1fae5 !important; }
+      body.dark .hero strong{ color:#6ee7b7; }
+      #seqInfo{ font-weight:500; margin-top:8px; padding:6px 12px; background:rgba(16,185,129,0.05); border-radius:6px; display:inline-block; }
+      body.dark #seqInfo{ background:rgba(6,78,59,0.4); color:#a7f3d0; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <h1><span class="brand">Mix_cre</span></h1>
+        <p class="subtitle">Plant Genomic CRE Analysis Platform</p>
+        <p class="desc">
+          An AI-powered platform for cis-regulatory element (CRE) prediction and analysis.
+          Supports DNA sequences from <strong>Rice</strong>, <strong>Arabidopsis</strong>, <strong>Maize</strong>, and <strong>Tomato</strong>.
+          Predict gene expression levels and identify potential regulatory elements using deep learning.
+        </p>
+        <div style="margin-top: 24px;">
+          <button id="btnTheme" class="btn secondary" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            Toggle Theme
+          </button>
+        </div>
+      </div>
+    </header>
+    <main>
+    <nav class="nav">
+      <a href="#home" id="nav-home" class="active">Home</a>
+      <a href="#predict" id="nav-predict">Predict</a>
+    </nav>
+    <section id="home" class="section" style="display:block;">
+      <!-- Hero Section -->
+      <div class="home-hero">
+        <div class="hero-badge">AI-Powered Genomics</div>
+        <h2 class="hero-title">Discover Cis-Regulatory Elements in Plant Genomes</h2>
+        <p class="hero-desc">
+          Leverage deep learning to predict gene expression and identify key regulatory sequences.
+          Our platform analyzes DNA sequences from major crop species with state-of-the-art interpretability methods.
+        </p>
+
+        <!-- Species Showcase -->
+        <div class="species-showcase">
+          <div class="species-item">
+            <div class="species-icon rice-icon">
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M32 8C32 8 28 20 28 32C28 44 32 56 32 56" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M32 20C32 20 24 18 20 22C16 26 18 32 18 32" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+                <path d="M32 20C32 20 40 18 44 22C48 26 46 32 46 32" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+                <path d="M32 32C32 32 22 30 18 36C14 42 18 48 18 48" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+                <path d="M32 32C32 32 42 30 46 36C50 42 46 48 46 48" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+                <ellipse cx="16" cy="26" rx="3" ry="5" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+                <ellipse cx="48" cy="26" rx="3" ry="5" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+                <ellipse cx="14" cy="42" rx="3" ry="5" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+                <ellipse cx="50" cy="42" rx="3" ry="5" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+              </svg>
+            </div>
+            <span class="species-name">Rice</span>
+            <span class="species-latin">Oryza sativa</span>
+          </div>
+          <div class="species-item">
+            <div class="species-icon arabidopsis-icon">
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M32 56V28" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+                <ellipse cx="32" cy="18" rx="12" ry="10" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+                <ellipse cx="20" cy="28" rx="8" ry="6" fill="#d1fae5" stroke="#10b981" stroke-width="2" transform="rotate(-30 20 28)"/>
+                <ellipse cx="44" cy="28" rx="8" ry="6" fill="#d1fae5" stroke="#10b981" stroke-width="2" transform="rotate(30 44 28)"/>
+                <ellipse cx="18" cy="40" rx="6" ry="5" fill="#d1fae5" stroke="#10b981" stroke-width="2" transform="rotate(-45 18 40)"/>
+                <ellipse cx="46" cy="40" rx="6" ry="5" fill="#d1fae5" stroke="#10b981" stroke-width="2" transform="rotate(45 46 40)"/>
+                <circle cx="32" cy="18" r="3" fill="#fbbf24"/>
+              </svg>
+            </div>
+            <span class="species-name">Arabidopsis</span>
+            <span class="species-latin">Arabidopsis thaliana</span>
+          </div>
+          <div class="species-item">
+            <div class="species-icon maize-icon">
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M32 56V24" stroke="#059669" stroke-width="3" stroke-linecap="round"/>
+                <path d="M32 24C32 24 24 8 32 8C40 8 32 24 32 24" stroke="#10b981" stroke-width="2" fill="#d1fae5"/>
+                <ellipse cx="32" cy="36" rx="8" ry="14" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
+                <path d="M26 30L24 24" stroke="#10b981" stroke-width="1.5"/>
+                <path d="M38 30L40 24" stroke="#10b981" stroke-width="1.5"/>
+                <circle cx="30" cy="32" r="2" fill="#f59e0b"/>
+                <circle cx="34" cy="32" r="2" fill="#f59e0b"/>
+                <circle cx="30" cy="38" r="2" fill="#f59e0b"/>
+                <circle cx="34" cy="38" r="2" fill="#f59e0b"/>
+                <circle cx="32" cy="44" r="2" fill="#f59e0b"/>
+              </svg>
+            </div>
+            <span class="species-name">Maize</span>
+            <span class="species-latin">Zea mays</span>
+          </div>
+          <div class="species-item">
+            <div class="species-icon tomato-icon">
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="36" r="16" fill="#fca5a5" stroke="#ef4444" stroke-width="2"/>
+                <path d="M32 20V12" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+                <path d="M28 22C28 22 24 16 28 14" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+                <path d="M36 22C36 22 40 16 36 14" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+                <path d="M32 22C32 22 32 14 32 12" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+                <ellipse cx="26" cy="32" rx="3" ry="4" fill="#fecaca"/>
+                <ellipse cx="38" cy="34" rx="2" ry="3" fill="#fecaca"/>
+              </svg>
+            </div>
+            <span class="species-name">Tomato</span>
+            <span class="species-latin">Solanum lycopersicum</span>
+          </div>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">4</span>
+            <span class="stat-label">Species Supported</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">3kb</span>
+            <span class="stat-label">Max Sequence Length</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">4</span>
+            <span class="stat-label">Analysis Methods</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Grid -->
+      <div class="features-section">
+        <h3 class="section-title">Platform Capabilities</h3>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <h4>Expression Prediction</h4>
+            <p>Input DNA sequences centered on TSS (up to 3kb) and receive normalized expression level predictions (z-scored log1p TPM).</p>
+            <div class="feature-details">
+              <div class="detail-item">
+                <span class="detail-label">Output:</span>
+                <span>y_pred - standardized expression value</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Applications:</span>
+                <span>Promoter engineering, transcriptional regulation assessment</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            </div>
+            <h4>Occlusion Analysis</h4>
+            <p>Sliding window occlusion method quantifies each position's contribution to expression prediction by measuring prediction changes when regions are masked.</p>
+            <div class="feature-details">
+              <div class="detail-item">
+                <span class="detail-label">Visualization:</span>
+                <span>Importance curves, colored sequence display, CSV export</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Applications:</span>
+                <span>TFBS localization, motif identification, mutation effect prediction</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <h4>In Silico Mutagenesis (ISM)</h4>
+            <p>Comprehensive saturation mutagenesis simulation testing all A/T/C/G substitutions at each position to generate complete mutation effect matrices.</p>
+            <div class="feature-details">
+              <div class="detail-item">
+                <span class="detail-label">Output:</span>
+                <span>[L×4] effect matrix, sensitivity scores, mutation heatmaps</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Applications:</span>
+                <span>Base editing optimization, synthetic promoter design, variant effect prediction</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </div>
+            <h4>CRE Scanning (Gradient × Input)</h4>
+            <p>Adaptive peak detection algorithm identifies variable-length candidate CRE regions using gradient-based importance scores with intelligent thresholding.</p>
+            <div class="feature-details">
+              <div class="detail-item">
+                <span class="detail-label">Features:</span>
+                <span>Statistical thresholds, 5-300bp detection, automatic region merging</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Applications:</span>
+                <span>Enhancer/silencer mapping, TFBS prediction, modular promoter design</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Start -->
+      <div class="quickstart-section">
+        <div class="quickstart-card">
+          <div class="quickstart-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div class="quickstart-content">
+            <h4>Quick Start Guide</h4>
+            <p>Click <strong>Predict</strong> in the navigation above to access the analysis workspace. Paste your DNA sequence or load an example, then use the prediction and interpretation tools to analyze your sequence.</p>
+          </div>
+          <a href="#predict" class="btn" onclick="location.hash='#predict';" style="white-space: nowrap;">
+            Start Analysis
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+    <a id="predict"></a>
+    <section id="sec-predict" class="section">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <h3 style="color: var(--brand); font-size: 20px; margin-bottom: 16px; display:flex; align-items:center; gap:8px;"><span style="font-size:24px;">📝</span> Input Sequence</h3>
+          <textarea id="seq" placeholder=">Optional FASTA header&#10;ACGT... (Recommended: 3001bp = 2000bp upstream + TSS + 1000bp downstream)" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+          <div id="seqInfo" class="muted">Length: 0 / 3001 (Recommended: 3001bp)</div>
+          <div class="toolbar">
+            <button id="btnDemo" class="btn secondary" title="Load example sequence">Example</button>
+            <button id="btnPaste" class="btn secondary" title="Paste from clipboard">Paste</button>
+            <button id="btnClear" class="btn secondary" title="Clear input">Clear</button>
+            <button id="btnPredict" class="btn">Predict</button>
+            <button id="btnExplain" class="btn secondary">Explain (Occlusion)</button>
+            <button id="btnExplainISM" class="btn secondary">Explain (ISM)</button>
+            <button id="btnScanCRE" class="btn secondary">Scan CRE</button>
+            <details class="inline" style="border:1px dashed var(--border); padding:6px 8px; border-radius:8px;">
+              <summary style="cursor:pointer; font-weight:600;">Advanced Settings</summary>
+              <label class="inline muted">Window</label>
+              <input id="win" type="number" value="21" min="5" max="200" style="width:64px;"/>
+              <label class="inline muted">Stride</label>
+              <input id="stride" type="number" value="21" min="5" max="200" style="width:64px;"/>
+              <label class="inline muted">Batch Size</label>
+              <input id="batch" type="number" value="64" min="8" max="512" step="8" style="width:74px;" title="Recommended 64 for ISM, reduce for larger sequences to avoid OOM"/>
+            </details>
+            <div id="spin" class="spinner"></div>
+          </div>
+          <div id="msg" class="muted" style="margin-top:8px;">-</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h3 style="color: var(--brand); font-size: 20px; margin-bottom: 16px; display:flex; align-items:center; gap:8px;"><span style="font-size:24px;">📊</span> Prediction Result</h3>
+          <div id="pred" class="mono" style="font-size: 16px; padding: 12px; background: rgba(16,185,129,0.05); border-radius: 8px; margin-bottom: 16px;">-</div>
+        </div>
+      </div>
+      
+      <!-- Progress Bar -->
+      <div id="progressContainer" class="progress-container">
+        <div class="progress-header">
+          <div class="progress-title">
+            <span class="progress-spinner"></span>
+            <span id="progressTitle">Processing...</span>
+          </div>
+          <div class="progress-percentage" id="progressPercentage">0%</div>
+        </div>
+        <div class="progress-bar-outer">
+          <div class="progress-bar-inner" id="progressBar" style="width: 0%;"></div>
+        </div>
+        <div class="progress-message" id="progressMessage">Initializing...</div>
+      </div>
+    </div>
+    </section>
+
+    <a id="explain"></a>
+    <section id="sec-explain" class="section">
+    <div class="card" style="margin-top:24px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; gap:12px;">
+        <h3 style="margin:0; color: var(--brand); font-size: 20px; display:flex; align-items:center; gap:8px;"><span style="font-size:24px;">🔍</span> Interpretation (Occlusion Importance)</h3>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button id="btnExportOcclusionPNG" class="btn secondary" style="display:none;">Export PNG</button>
+          <button id="btnExportCSV" class="btn secondary" style="display:none;">Export CSV</button>
+          <img src="./images/occlusion_demo.svg" alt="Occlusion method illustration" class="illus" />
+        </div>
+      </div>
+      <div id="explainStats" class="muted" style="margin-bottom:12px;">-</div>
+      <div id="chartContainer" class="chart-container" style="display:none;">
+        <canvas id="peakChart"></canvas>
+      </div>
+      <div id="explainSeq" style="font-family:monospace; font-size:12px; line-height:1.6; display:flex; flex-wrap:wrap; gap:2px; max-height:400px; overflow-y:auto; overflow-x:hidden; background:rgba(16,185,129,0.02); color:#064e3b; padding:14px; border-radius:12px; margin-top:16px; border:2px solid var(--border);"></div>
+    </div>
+
+    <div class="card" style="margin-top:24px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; gap:12px;">
+        <h3 style="margin:0; color: var(--brand); font-size: 20px; display:flex; align-items:center; gap:8px;"><span style="font-size:24px;">🧬</span> Interpretation (ISM Mutation Effect Scan)</h3>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button id="btnExportISMPNG" class="btn secondary" style="display:none;">Export PNG</button>
+          <button id="btnExportISMCSV" class="btn secondary" style="display:none;">Export CSV</button>
+        </div>
+      </div>
+      <div id="ismMsg" class="muted" style="margin-bottom:12px;">-</div>
+      <div id="ismHeatmapContainer" class="chart-container" style="display:none;">
+        <canvas id="ismHeatmap"></canvas>
+      </div>
+      <div id="ismResults" style="font-size:13px; margin-top:16px;"></div>
+    </div>
+    </section>
+
+    <a id="scan"></a>
+    <section id="sec-scan" class="section">
+    <div class="card" style="margin-top:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom: 16px;">
+        <h3 style="margin:0; color: var(--brand); font-size: 20px; display:flex; align-items:center; gap:8px;"><span style="font-size:24px;">📍</span> CRE Scan Results</h3>
+        
+      </div>
+      <div id="creMsg" class="muted">-</div>
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:8px;">
+        <div class="muted">Export: Peak CSV (start_rel, end_rel, importance_value)</div>
+        <div style="display:flex; gap:10px;">
+          <button id="btnExportCRECSV" class="btn secondary" style="display:none;">Export Peak CSV</button>
+          <button id="btnExportCREPNG" class="btn secondary" style="display:none;">Export Image PNG</button>
+        </div>
+      </div>
+      <div id="scanChartContainer" class="chart-container" style="display:none;">
+        <canvas id="scanChart"></canvas>
+      </div>
+      <div id="creResults" class="mono" style="margin-top:8px; overflow:auto; max-height:240px;">-</div>
+    </div>
+    </section>
+    
+
+    
+
+    
+
+    
+
+    <script>
+      function parseFasta(txt){
+        const lines = txt.trim().split(/\r?\n/);
+        const seq = lines.filter(l=>!l.startsWith('>')).join('').toUpperCase().replace(/[^ACGTN]/g,'N');
+        return seq;
+      }
+
+      // Progress Bar Control
+      function showProgress(title, message = '') {
+        const container = document.getElementById('progressContainer');
+        document.getElementById('progressTitle').textContent = title;
+        document.getElementById('progressMessage').textContent = message;
+        document.getElementById('progressPercentage').textContent = '0%';
+        document.getElementById('progressBar').style.width = '0%';
+        container.style.display = 'block';
+      }
+      
+      function updateProgress(percent, message = '') {
+        percent = Math.min(100, Math.max(0, percent));
+        document.getElementById('progressPercentage').textContent = `${Math.round(percent)}%`;
+        document.getElementById('progressBar').style.width = `${percent}%`;
+        if (message) {
+          document.getElementById('progressMessage').textContent = message;
+        }
+      }
+      
+      function hideProgress() {
+        setTimeout(() => {
+          document.getElementById('progressContainer').style.display = 'none';
+        }, 800);
+      }
+      function setBusy(b){
+        document.getElementById('btnPredict').disabled=b;
+        document.getElementById('btnExplain').disabled=b;
+        document.getElementById('spin').style.display=b?'inline-block':'none';
+      }
+      // UI helpers
+      let maxSeqLen = 3001;  // Recommended: TSS upstream 2000bp + TSS + downstream 1000bp
+      const EXPECTED_SEQ_LEN = 3001;
+      function updateSeqInfo(){
+        const seq = parseFasta(document.getElementById('seq').value);
+        const el = document.getElementById('seqInfo');
+        if(el){ 
+          let statusText = `Length: ${seq.length} / ${maxSeqLen}`;
+          let statusColor = 'var(--muted)';
+          
+          if(seq.length > maxSeqLen){
+            statusText += ' (exceeds max length)';
+            statusColor = '#ff6b6b';
+          } else if(seq.length > 0 && seq.length < EXPECTED_SEQ_LEN * 0.5){
+            statusText += ' (short sequence, recommend 3001bp)';
+            statusColor = 'var(--warning)';
+          } else if(seq.length === EXPECTED_SEQ_LEN){
+            statusText += ' ✓';
+            statusColor = 'var(--success)';
+          }
+          
+          el.textContent = statusText;
+          el.style.color = statusColor;
+        }
+      }
+      function setTheme(theme){
+        const t = theme || localStorage.getItem('theme') || 'light';
+        document.body.classList.toggle('dark', t==='dark');
+        localStorage.setItem('theme', t);
+        const btn = document.getElementById('btnTheme');
+        if(btn){ btn.textContent = (t==='dark' ? 'Switch to Light' : 'Switch to Dark'); }
+      }
+      function toggleTheme(){
+        const now = document.body.classList.contains('dark') ? 'light' : 'dark';
+        setTheme(now);
+      }
+      async function fetchJSON(url, options){
+        const res = await fetch(url, options);
+        const ct = res.headers.get('content-type') || '';
+        if(ct.includes('application/json')){
+          const data = await res.json();
+          return {res, data};
+        } else {
+          const text = await res.text();
+          throw new Error(text.slice(0, 200));
+        }
+      }
+      async function predict(){
+        const seq = parseFasta(document.getElementById('seq').value);
+        if(!seq){ document.getElementById('msg').textContent='Please enter a DNA sequence'; return; }
+        if(seq.length>maxSeqLen){ document.getElementById('msg').textContent=`Sequence too long: ${seq.length} > max length ${maxSeqLen}`; return; }
+        document.getElementById('msg').textContent='Running...'; setBusy(true);
+        try{
+          const {res, data} = await fetchJSON('api/predict', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ sequence: seq, rc_pool: true }) });
+          if(!res.ok){ throw new Error(data.detail||res.statusText); }
+          
+          // Display prediction result - TPM estimate only (no z-score)
+          let predHtml = '';
+          
+          const activityLevel = data.activity_level || '';
+          
+          // Add TPM estimate as primary result
+          if(data.tpm_estimate !== undefined){
+            predHtml += `<div style="margin-bottom:8px;"><strong>Estimated TPM:</strong> ${data.tpm_estimate.toFixed(2)} <span style="color:var(--muted);font-size:13px;">(${activityLevel})</span></div>`;
+          } else {
+            predHtml += `<div style="margin-bottom:8px;"><strong>Activity:</strong> ${activityLevel}</div>`;
+          }
+          
+          // Add predicted species
+          if(data.predicted_species){
+            const speciesProb = data.class_probs ? (data.class_probs[data.predicted_species_id] * 100).toFixed(1) : '?';
+            predHtml += `<div style="margin-bottom:8px;"><strong>Predicted Species:</strong> ${data.predicted_species} <span style="color:var(--muted);font-size:13px;">(${speciesProb}%)</span></div>`;
+          }
+          
+          // Add warning if sequence length is not optimal
+          if(data.warnings && data.warnings.length > 0){
+            predHtml += `<div style="color:var(--warning);font-size:13px;margin-top:8px;">⚠️ ${data.warnings.join('; ')}</div>`;
+          } else if(data.input_len && data.padding_ratio && data.padding_ratio > 0.5){
+            predHtml += `<div style="color:var(--warning);font-size:13px;margin-top:8px;">⚠️ Sequence length (${data.input_len}bp) is short, recommend using 3001bp sequence</div>`;
+          }
+          
+          document.getElementById('pred').innerHTML = predHtml;
+          // Model info no longer displayed
+          if(typeof data.seq_len==='number'){ maxSeqLen = data.seq_len; updateSeqInfo(); }
+          
+          // Show different completion messages based on padding ratio
+          if(data.padding_ratio && data.padding_ratio > 0.5){
+            document.getElementById('msg').textContent='Done (Note: short sequence predictions may be inaccurate, recommend using 3001bp sequences)';
+          } else {
+            document.getElementById('msg').textContent='Done';
+          }
+        }catch(e){
+          document.getElementById('msg').textContent='Error: '+e.message;
+        }finally{ setBusy(false); }
+      }
+      function colorByImportance(val, minVal, maxVal){
+        if(maxVal === minVal) return '#9aa4b2';
+        const normalized = (val - minVal) / (maxVal - minVal);
+        if(normalized < 0.33) return '#3a7afe'; // Blue - low importance
+        if(normalized < 0.67) return '#17d997'; // Green - medium importance
+        return '#ff6b6b'; // Red - high importance
+      }
+      let currentImportanceData = null;
+      let currentSequence = null;
+      let peakChart = null;
+      let scanChart = null;
+
+      function exportToCSV(imp, seq){
+        const csv = ['Position,Base,Importance'];
+        for(let i=0; i<imp.length; i++){
+          csv.push(`${i},${seq[i] || 'N'},${imp[i].toFixed(6)}`);
+        }
+        const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', `importance_scores_${new Date().getTime()}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      function renderPeakChart(imp, seq){
+        const ctx = document.getElementById('peakChart').getContext('2d');
+        const TSS_OFFSET = 2000; // Display x-axis as position relative to TSS
+        
+        // Destroy old chart
+        if(peakChart){
+          peakChart.destroy();
+        }
+
+        const positions = Array.from({length: imp.length}, (_, i) => i);
+        const minImp = Math.min(...imp);
+        const maxImp = Math.max(...imp);
+        
+        // Sample data to improve performance (if sequence is too long)
+        let displayPositions = positions; // Original index
+        let displayImp = imp;
+        const maxPoints = 2000; // Display at most 2000 points
+        if(imp.length > maxPoints){
+          const step = Math.ceil(imp.length / maxPoints);
+          displayPositions = positions.filter((_, i) => i % step === 0);
+          displayImp = imp.filter((_, i) => i % step === 0);
+        }
+
+        const labelsRel = displayPositions.map(i => i - TSS_OFFSET);
+        peakChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labelsRel,
+            datasets: [{
+              label: 'Importance Score',
+              data: displayImp,
+              borderColor: '#3a7afe',
+              backgroundColor: 'rgba(58, 122, 254, 0.1)',
+              borderWidth: 1.5,
+              pointRadius: 0,
+              pointHoverRadius: 4,
+              fill: true,
+              tension: 0.1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                labels: { color: '#0f172a' }
+              },
+              tooltip: {
+                mode: 'index',
+                intersect: false,
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                titleColor: '#0f172a',
+                bodyColor: '#0f172a',
+                borderColor: '#e5e7eb',
+                borderWidth: 1,
+                callbacks: {
+                  title: function(context) {
+                    return `Position relative to TSS: ${context[0].label}`;
+                  },
+                  label: function(context) {
+                    const rel = parseInt(context.label);
+                    const pos = rel + TSS_OFFSET; // Restore to original index for base display
+                    return [
+                      `Importance: ${context.parsed.y.toFixed(4)}`,
+                      `Base: ${seq[pos] || 'N'}`
+                    ];
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Position relative to TSS (bp)',
+                  color: '#64748b'
+                },
+                ticks: { color: '#64748b' },
+                grid: { color: 'rgba(229, 231, 235, 0.8)' }
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: 'Importance Score',
+                  color: '#64748b'
+                },
+                ticks: { color: '#64748b' },
+                grid: { color: 'rgba(229, 231, 235, 0.8)' }
+              }
+            },
+            interaction: {
+              mode: 'index',
+              intersect: false
+            }
+          }
+        });
+      }
+
+      function renderScanChart(hits, importance){
+        const container = document.getElementById('scanChartContainer');
+        if(container){ container.style.display = 'block'; }
+        const ctx = document.getElementById('scanChart').getContext('2d');
+        if(scanChart){ scanChart.destroy(); }
+        const TSS_OFFSET = 2000;
+        
+        if(!importance || importance.length === 0){
+          const sorted = [...hits].sort((a,b)=> (a.start - b.start));
+          const data = sorted.map(h => ({ x: ((h.start + h.end)/2 - TSS_OFFSET), y: h.mean_importance }));
+          const colors = sorted.map(h => h.direction === 'pos' ? 'rgba(239,68,68,0.7)' : (h.direction === 'neg' ? 'rgba(59,130,246,0.7)' : 'rgba(100,116,139,0.7)'));
+          scanChart = new Chart(ctx, {
+            type: 'scatter',
+            data: { 
+              datasets: [{ 
+                label: 'CRE Region', 
+                data, 
+                backgroundColor: colors,
+                borderColor: colors,
+                borderWidth: 1,
+                pointRadius: 5,
+                pointHoverRadius: 7
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: {
+                    label: function(context){
+                      const i = context.dataIndex;
+                      const h = sorted[i];
+                      return [`Position: ${h.start - TSS_OFFSET} ~ ${h.end - TSS_OFFSET}`, `Mean: ${h.mean_importance.toFixed(6)}`, `Max: ${h.max_importance.toFixed(6)}`, `Direction: ${h.direction}`];
+                    }
+                  },
+                  backgroundColor: 'rgba(255,255,255,0.95)',
+                  titleColor: '#0f172a',
+                  bodyColor: '#0f172a',
+                  borderColor: '#e5e7eb',
+                  borderWidth: 1
+                }
+              },
+              scales: {
+                x: { 
+                  type: 'linear',
+                  title: { display: true, text: 'Position relative to TSS (bp)', color: '#64748b' }, 
+                  ticks: { color: '#64748b' }, 
+                  grid: { color: 'rgba(229, 231, 235, 0.8)' } 
+                },
+                y: { 
+                  title: { display: true, text: 'Mean Importance', color: '#64748b' }, 
+                  ticks: { color: '#64748b' }, 
+                  grid: { color: 'rgba(229, 231, 235, 0.8)' },
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+          return;
+        }
+        
+        const positions = Array.from({length: importance.length}, (_, i) => i - TSS_OFFSET);
+        let displayPos = positions;
+        let displayImp = importance;
+        const maxPoints = 2000;
+        if(importance.length > maxPoints){
+          const step = Math.ceil(importance.length / maxPoints);
+          displayPos = positions.filter((_, i) => i % step === 0);
+          displayImp = importance.filter((_, i) => i % step === 0);
+        }
+        
+        const datasets = [{
+          label: 'GI Importance',
+          data: displayImp,
+          borderColor: '#64748b',
+          backgroundColor: 'rgba(100,116,139,0.1)',
+          borderWidth: 1.5,
+          pointRadius: 0,
+          pointHoverRadius: 3,
+          fill: true,
+          tension: 0.1,
+          order: 2
+        }];
+        
+        // CRE region markers removed to avoid dense points forming thick lines
+        // const creAnnotations = [];
+        // for(const h of hits){
+        //   const centerPos = ((h.start + h.end) / 2 - TSS_OFFSET);
+        //   const color = h.direction === 'pos' ? '#ef4444' : (h.direction === 'neg' ? '#3b82f6' : '#64748b');
+        //   creAnnotations.push({
+        //     x: centerPos,
+        //     y: h.mean_importance,
+        //     color: color,
+        //     radius: 2
+        //   });
+        // }
+        
+        // if(creAnnotations.length > 0){
+        //   datasets.push({
+        //     label: 'CRE Region',
+        //     data: creAnnotations.map(a => ({x: a.x, y: a.y})),
+        //     backgroundColor: creAnnotations.map(a => a.color),
+        //     borderColor: creAnnotations.map(a => a.color),
+        //     borderWidth: 1,
+        //     pointRadius: creAnnotations.map(a => a.radius),
+        //     pointHoverRadius: 5,
+        //     showLine: false,
+        //     order: 1
+        //   });
+        // }
+        
+        scanChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: displayPos,
+            datasets: datasets
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { 
+                labels: { color: '#0f172a' },
+                onClick: null
+              },
+              tooltip: {
+                mode: 'index',
+                intersect: false,
+                backgroundColor: 'rgba(255,255,255,0.95)',
+                titleColor: '#0f172a',
+                bodyColor: '#0f172a',
+                borderColor: '#e5e7eb',
+                borderWidth: 1,
+                callbacks: {
+                  title: function(context) {
+                    return `Position relative to TSS: ${context[0].label}`;
+                  },
+                  label: function(context) {
+                    return `Importance: ${context.parsed.y.toFixed(6)}`;
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                title: { display: true, text: 'Position relative to TSS (bp)', color: '#64748b' },
+                ticks: { color: '#64748b' },
+                grid: { color: 'rgba(229, 231, 235, 0.8)' }
+              },
+              y: {
+                title: { display: true, text: 'Importance', color: '#64748b' },
+                ticks: { color: '#64748b' },
+                grid: { color: 'rgba(229, 231, 235, 0.8)' },
+                beginAtZero: true
+              }
+            },
+            interaction: {
+              mode: 'index',
+              intersect: false
+            }
+          }
+        });
+      }
+
+      function renderImportanceViz(imp, seq){
+        currentImportanceData = imp;
+        currentSequence = seq;
+        
+        const minImp = Math.min(...imp);
+        const maxImp = Math.max(...imp);
+        const avgImp = imp.reduce((a,b)=>a+b,0) / imp.length;
+        document.getElementById('explainStats').textContent = 
+          `Min: ${minImp.toFixed(4)} | Max: ${maxImp.toFixed(4)} | Mean: ${avgImp.toFixed(4)} | Length: ${imp.length}`;
+        
+        // Show peak chart
+        document.getElementById('chartContainer').style.display = 'block';
+        document.getElementById('btnExportCSV').style.display = 'inline-block';
+        document.getElementById('btnExportOcclusionPNG').style.display = 'inline-block';
+        renderPeakChart(imp, seq);
+        
+        // Sequence coloring display
+        const seqDiv = document.getElementById('explainSeq');
+        let html = '';
+        const absMaxImp = Math.max(Math.abs(minImp), Math.abs(maxImp));
+        for(let i=0; i<seq.length; i++){
+          // Use CSS flex-wrap for automatic line breaks
+          const val = imp[i] || 0;
+          const color = colorByImportance(val, minImp, maxImp);
+          // Set opacity based on absolute importance value
+          const alpha = absMaxImp > 0 ? Math.min(1, Math.abs(val) / absMaxImp) : 0.5;
+          const alphaHex = Math.floor(alpha * 255).toString(16).padStart(2, '0');
+          html += `<span class="seq-char" style="background:${color}${alphaHex}; color:#0f172a;" title="Position ${i-2000}: Importance=${val.toFixed(4)}">${seq[i]}</span>`;
+        }
+        seqDiv.innerHTML = html;
+      }
+      // Export peak CSV (Gi segments): contains complete variable-length CRE information
+      function exportCRECSV(hits, imp, seq){
+        const TSS_OFFSET = 2000;
+        const header = 'start_rel,end_rel,length,peak_position_rel,mean_importance,max_importance,sequence';
+        const rows = [header];
+        for(const h of hits){
+          const startRel = h.start - TSS_OFFSET;
+          const endRel = h.end - TSS_OFFSET;
+          const peakRel = (h.peak_position !== undefined ? h.peak_position : h.start) - TSS_OFFSET;
+          const length = h.length || (h.end - h.start);
+          const seqSeg = (typeof seq === 'string') ? seq.slice(h.start, h.end) : '';
+          rows.push(`${startRel},${endRel},${length},${peakRel},${h.mean_importance},${h.max_importance},${seqSeg}`);
+        }
+        const blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', `cre_peaks_${new Date().getTime()}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+      async function explain(){
+        const seq = parseFasta(document.getElementById('seq').value);
+        if(!seq){ document.getElementById('msg').textContent='Please enter a DNA sequence'; return; }
+        if(seq.length>maxSeqLen){ document.getElementById('msg').textContent=`Sequence too long: ${seq.length} > max length ${maxSeqLen}`; return; }
+        
+        showProgress('Occlusion Interpretation', 'Preparing calculation...');
+        document.getElementById('msg').textContent='Computing interpretation (Occlusion method)...'; setBusy(true);
+        document.getElementById('explainStats').textContent = '-';
+        document.getElementById('chartContainer').style.display = 'none';
+        document.getElementById('btnExportCSV').style.display = 'none';
+        document.getElementById('explainSeq').textContent = '-';
+        if(peakChart){
+          peakChart.destroy();
+          peakChart = null;
+        }
+        
+        try{
+          updateProgress(10, 'Sending request to server...');
+          const win = parseInt(document.getElementById('win').value || '21');
+          const st = parseInt(document.getElementById('stride').value || String(win));
+          const bs = parseInt(document.getElementById('batch').value || '128');
+          
+          updateProgress(30, `Running occlusion analysis (window=${win}bp, stride=${st}bp)...`);
+          const {res, data} = await fetchJSON('api/explain/occlusion', { 
+            method:'POST', 
+            headers:{'Content-Type':'application/json'}, 
+            body: JSON.stringify({ sequence: seq, window: win, stride: st, batch_size: bs })
+          });
+          
+          updateProgress(70, 'Receiving data...');
+          if(!res.ok){ throw new Error(data.detail||res.statusText); }
+          const imp = data.importance || [];
+          if(imp.length === 0){ throw new Error('Importance array is empty'); }
+          if(imp.length !== seq.length){
+            document.getElementById('msg').textContent=`Warning: importance length (${imp.length}) does not match sequence length (${seq.length})`;
+          }
+          
+          updateProgress(85, 'Generating visualization...');
+          renderImportanceViz(imp, seq);
+          if(typeof data.seq_len==='number'){ maxSeqLen = data.seq_len; updateSeqInfo(); }
+          
+          updateProgress(100, 'Done!');
+          document.getElementById('msg').textContent=`Done | base_pred=${data.base_pred !== undefined ? data.base_pred.toFixed(4) : '-'}`;
+          // Auto-navigate to interpretation section
+          showSection('explain'); setActiveNav();
+          hideProgress();
+        }catch(e){
+          document.getElementById('msg').textContent='Error: '+e.message;
+          document.getElementById('msg').className='err';
+          document.getElementById('explainStats').textContent = '-';
+          document.getElementById('chartContainer').style.display = 'none';
+          document.getElementById('btnExportCSV').style.display = 'none';
+          document.getElementById('explainSeq').textContent = '-';
+          if(peakChart){
+            peakChart.destroy();
+            peakChart = null;
+          }
+        }finally{ 
+          setBusy(false);
+          hideProgress();
+          setTimeout(()=>{ document.getElementById('msg').className='muted'; }, 3000);
+        }
+      }
+      
+      async function scanCRE(){
+        showSection('scan'); setActiveNav();
+        const btnScan = document.getElementById('btnScanCRE');
+        if(btnScan){ btnScan.disabled = true; }
+        const seq = parseFasta(document.getElementById('seq').value);
+        document.getElementById('creResults').textContent='-';
+        const exportBtnInit = document.getElementById('btnExportCRECSV');
+        if(exportBtnInit){ exportBtnInit.style.display = 'none'; exportBtnInit.onclick = null; }
+        const exportPngInit = document.getElementById('btnExportCREPNG');
+        if(exportPngInit){ exportPngInit.style.display = 'none'; exportPngInit.onclick = null; }
+        const scanChartEl = document.getElementById('scanChartContainer');
+        if(scanChartEl){ scanChartEl.style.display = 'none'; }
+        if(scanChart){ scanChart.destroy(); scanChart = null; }
+        if(!seq){ document.getElementById('creMsg').textContent='Please enter a DNA sequence'; if(btnScan){ btnScan.disabled=false; } return; }
+        if(seq.length>maxSeqLen){ document.getElementById('creMsg').textContent=`Sequence too long: ${seq.length} > max length ${maxSeqLen}`; if(btnScan){ btnScan.disabled=false; } return; }
+        
+        showProgress('CRE Scan', 'Preparing analysis...');
+        document.getElementById('creMsg').textContent='Scanning...';
+        try{
+          updateProgress(15, 'Sending request...');
+          const win = parseInt(document.getElementById('win')?.value || '21');
+          const st = parseInt(document.getElementById('stride')?.value || String(win));
+          
+          updateProgress(35, 'Computing Gradient×Input importance...');
+          const {res, data} = await fetchJSON('api/cre/scan_gi', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ sequence: seq, rc_pool: true, window: win, stride: st, top_k: 100 }) });
+          
+          updateProgress(70, 'Peak detection...');
+          if(!res.ok){ throw new Error(data.detail||res.statusText); }
+          const hits = data.hits || [];
+          const importance = data.importance || [];
+          const threshold = data.threshold || 'N/A';
+          const method = data.method || 'fixed_window';
+          document.getElementById('creMsg').textContent = `Hits: ${hits.length} | Method: ${method === 'adaptive_peak_detection' ? 'Adaptive Peak Detection' : 'Fixed Window'} | Threshold: ${typeof threshold === 'number' ? threshold.toFixed(6) : threshold}`;
+          if(hits.length === 0){
+            document.getElementById('creResults').textContent='-';
+            if(scanChartEl){ scanChartEl.style.display = 'none'; }
+            if(exportPngInit){ exportPngInit.style.display = 'none'; }
+            return;
+          }
+          hits.sort((a,b)=> (b.mean_importance===a.mean_importance ? b.max_importance-a.max_importance : b.mean_importance-a.mean_importance));
+          let html = '<table style="width:100%; border-collapse:separate;">\n<thead><tr><th style="text-align:right;">start_rel</th><th style="text-align:right;">end_rel</th><th style="text-align:right;">length</th><th style="text-align:right;">peak_rel</th><th style="text-align:right;">mean_imp</th><th style="text-align:right;">max_imp</th></tr></thead><tbody>';
+          for(const h of hits){
+            const startRel = h.start - 2000;
+            const endRel = h.end - 2000;
+            const peakRel = (h.peak_position || h.start) - 2000;
+            const length = h.length || (h.end - h.start);
+            html += `<tr><td style="text-align:right;">${startRel}</td><td style="text-align:right;">${endRel}</td><td style="text-align:right;">${length}</td><td style="text-align:right;">${peakRel}</td><td style="text-align:right;">${h.mean_importance.toFixed(6)}</td><td style="text-align:right;">${h.max_importance.toFixed(6)}</td></tr>`;
+          }
+          html += '</tbody></table>';
+          
+          updateProgress(85, 'Rendering results table...');
+          document.getElementById('creResults').innerHTML = html;
+          const exportBtn = document.getElementById('btnExportCRECSV');
+          if(exportBtn){
+            exportBtn.style.display = 'inline-block';
+            exportBtn.onclick = ()=> exportCRECSV(hits, importance, seq);
+          }
+          
+          updateProgress(95, 'Generating chart...');
+          renderScanChart(hits, importance);
+          const exportPngBtn = document.getElementById('btnExportCREPNG');
+          if(exportPngBtn){
+            exportPngBtn.style.display = 'inline-block';
+            exportPngBtn.onclick = ()=>{
+              if(!scanChart) return;
+              // Create temporary canvas with white background
+              const sourceCanvas = scanChart.canvas;
+              const tempCanvas = document.createElement('canvas');
+              tempCanvas.width = sourceCanvas.width;
+              tempCanvas.height = sourceCanvas.height;
+              const ctx = tempCanvas.getContext('2d');
+              // Fill white background
+              ctx.fillStyle = '#ffffff';
+              ctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+              // Draw original image
+              ctx.drawImage(sourceCanvas, 0, 0);
+              // Export
+              const link = document.createElement('a');
+              link.href = tempCanvas.toDataURL('image/png');
+              link.download = `cre_scan_${new Date().getTime()}.png`;
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            };
+          }
+          // Highlight hit regions on sequence view
+          const seqDiv = document.getElementById('explainSeq');
+          let seqHtml = '';
+          const ann = new Array(seq.length).fill(false);
+          for(const h of hits){ for(let i=h.start; i<h.end; i++){ ann[i] = true; } }
+          for(let i=0;i<seq.length;i++){
+            const isCRE = ann[i];
+            const bg = isCRE ? '#10b98133' : 'transparent';  // Use green to highlight CRE regions
+            seqHtml += `<span class="seq-char" style="background:${bg}; color:#0f172a;" title="Position ${i-2000}${isCRE?' · CRE':''}">${seq[i]}</span>`;
+          }
+          seqDiv.innerHTML = seqHtml;
+          
+          updateProgress(100, 'Done!');
+          // Auto-navigate to scan results section
+          showSection('scan'); setActiveNav();
+          hideProgress();
+        }catch(e){
+          document.getElementById('creMsg').textContent='Error: '+e.message;
+          hideProgress();
+        }finally{
+          if(btnScan){ btnScan.disabled = false; }
+        }
+      }
+
+      // ISM Mutation Effect Scan
+      let ismChart = null;
+      async function explainISM(){
+        const seq = parseFasta(document.getElementById('seq').value);
+        if(!seq){ document.getElementById('ismMsg').textContent='Please enter a DNA sequence'; return; }
+        if(seq.length>maxSeqLen){ document.getElementById('ismMsg').textContent=`Sequence too long: ${seq.length} > max length ${maxSeqLen}`; return; }
+        
+        console.log('[ISM] Starting, sequence length:', seq.length);
+        showProgress('ISM Mutation Scan', 'Preparing saturation mutagenesis analysis...');
+        document.getElementById('ismMsg').textContent='ISM scanning... (this may take a while)';
+        setBusy(true);
+        
+        try{
+          updateProgress(10, 'Sending request...');
+          const bs = parseInt(document.getElementById('batch').value || '128');
+          const totalMutations = seq.length * 3;  // 3 mutations per position
+          const estimatedBatches = Math.ceil(totalMutations / bs);
+          const estimatedTime = Math.ceil(estimatedBatches * 0.5);  // Estimate: 0.5 seconds per batch
+          
+          console.log('[ISM] Request parameters:', {seqLength: seq.length, batchSize: bs, mutations: totalMutations, batches: estimatedBatches});
+          updateProgress(15, `Starting batch mutations (~${estimatedBatches} batches, estimated ${estimatedTime}s)`);
+          
+          console.log('[ISM] Sending API request...');
+          const startTime = Date.now();
+          const {res, data} = await fetchJSON('api/explain/ism', {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ sequence: seq, batch_size: bs, rc_pool: true })
+          });
+          console.log('[ISM] API response time:', (Date.now() - startTime) / 1000, 'seconds');
+          
+          updateProgress(80, 'Receiving mutation effect data...');
+          if(!res.ok){ 
+            console.error('[ISM] API error:', res.status, data);
+            throw new Error(data.detail||res.statusText); 
+          }
+          
+          console.log('[ISM] Received data:', {hasEffects: !!data.effects, hasImportance: !!data.importance, hasBases: !!data.bases});
+          const effects = data.effects || [];  // [L, 4]
+          const importance = data.importance || [];  // [L]
+          const bases = data.bases || [];
+          const base_pred = data.base_pred || 0;
+          
+          console.log('[ISM] Data lengths:', {effects: effects.length, importance: importance.length, bases: bases.length, base_pred});
+          
+          if(effects.length === 0){
+            console.warn('[ISM] No effect data');
+            document.getElementById('ismMsg').textContent='No ISM data';
+            hideProgress();
+            return;
+          }
+          
+          updateProgress(85, 'Calculating mutation sensitivity...');
+          document.getElementById('ismMsg').textContent=`ISM complete | Sequence length: ${bases.length} | Baseline prediction: ${base_pred.toFixed(4)}`;
+          
+          console.log('[ISM] Starting heatmap rendering...');
+          updateProgress(90, 'Generating heatmap...');
+          // Draw heatmap
+          renderISMHeatmap(effects, bases, importance);
+          
+          console.log('[ISM] Starting table generation...');
+          updateProgress(95, 'Generating sensitive site table...');
+          // Export CSV button
+          const exportBtn = document.getElementById('btnExportISMCSV');
+          if(exportBtn){
+            exportBtn.style.display = 'inline-block';
+            exportBtn.onclick = ()=> exportISMCSV(effects, bases, importance, base_pred);
+          }
+          
+          // Export PNG button
+          const exportPngBtn = document.getElementById('btnExportISMPNG');
+          if(exportPngBtn){
+            exportPngBtn.style.display = 'inline-block';
+            exportPngBtn.onclick = ()=> exportISMPNG();
+          }
+          
+          // Show top sensitive sites
+          showTopMutations(effects, bases, importance);
+          
+          console.log('[ISM] Completed all rendering, preparing to navigate...');
+          updateProgress(100, 'Done!');
+          // Auto-navigate to interpretation results section
+          showSection('explain'); 
+          setActiveNav();
+          console.log('[ISM] Navigated to explain page');
+          hideProgress();
+        }catch(e){
+          console.error('[ISM] Error occurred:', e);
+          const errMsg = e.message || String(e);
+          document.getElementById('ismMsg').textContent='Error: '+errMsg;
+          
+          // Special handling for memory errors
+          if(errMsg.includes('memory') || errMsg.includes('alloc')){
+            alert('❌ Out of Memory Error\n\n' +
+                  'Suggested solutions:\n' +
+                  '1. Reduce "Batch Size" parameter (current: ' + document.getElementById('batch').value + ')\n' +
+                  '   - Recommended: try 32 or 16\n' +
+                  '2. Close other memory-intensive programs\n' +
+                  '3. Test with a shorter sequence\n\n' +
+                  'The backend will automatically adjust batch size to save memory. Refresh the page and try again.');
+          } else {
+            alert('ISM calculation error: ' + errMsg + '\n\nCheck browser console (F12) and server logs for details');
+          }
+          hideProgress();
+        }finally{
+          console.log('[ISM] Execution finished');
+          setBusy(false);
+        }
+      }
+
+      function renderISMHeatmap(effects, bases, importance){
+        console.log('[renderISMHeatmap] Starting render, data length:', effects.length);
+        const container = document.getElementById('ismHeatmapContainer');
+        const canvas = document.getElementById('ismHeatmap');
+        
+        if(!effects || effects.length === 0){
+          console.error('[renderISMHeatmap] Invalid effects data');
+          container.style.display = 'none';
+          return;
+        }
+        
+        if(ismChart){ 
+          ismChart.destroy(); 
+          ismChart = null; 
+        }
+        container.style.display = 'block';
+        
+        const L = effects.length;
+        const positions = Array.from({length: L}, (_, i) => i - 2000);  // Relative to TSS
+        
+        // Only show top 50 positions by importance (to avoid oversized heatmap)
+        const topN = Math.min(50, L);
+        const indices = importance.map((v, i) => ({v, i}))
+          .sort((a, b) => b.v - a.v)
+          .slice(0, topN)
+          .map(x => x.i)
+          .sort((a, b) => a - b);  // Sort by position
+        
+        console.log('[renderISMHeatmap] Top positions count:', indices.length, 'sample positions:', indices.slice(0, 5));
+        
+        // Use bar chart, one dataset per base
+        const baseLabels = ['→A', '→T', '→C', '→G'];
+        const xLabels = indices.map(i => positions[i]);
+        
+        const datasets = baseLabels.map((label, baseIdx) => {
+          const data = indices.map(pos => effects[pos][baseIdx]);
+          return {
+            label: label,
+            data: data,
+            backgroundColor: function(context) {
+              const value = context.parsed.y;
+              if(!value && value !== 0) return 'rgba(200,200,200,0.3)';
+              const absMax = 0.5;
+              const alpha = Math.min(0.9, Math.abs(value) / absMax * 0.7 + 0.2);
+              if(value > 0){
+                return `rgba(239, 68, 68, ${alpha})`;  // Red - positive effect
+              } else if(value < 0){
+                return `rgba(59, 130, 246, ${alpha})`;  // Blue - negative effect
+              } else {
+                return 'rgba(156, 163, 175, 0.3)';  // Gray - no effect
+              }
+            },
+            borderWidth: 0.5,
+            borderColor: 'rgba(255,255,255,0.5)',
+            barPercentage: 0.95,
+            categoryPercentage: 0.95
+          };
+        });
+        
+        console.log('[renderISMHeatmap] Datasets created, starting Chart creation');
+        
+        ismChart = new Chart(canvas, {
+          type: 'bar',
+          data: { 
+            labels: xLabels,
+            datasets: datasets
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { 
+                display: true,
+                position: 'top',
+                labels: { 
+                  color: '#0f172a',
+                  font: { size: 12 },
+                  boxWidth: 12,
+                  padding: 10
+                }
+              },
+              title: { 
+                display: true, 
+                text: `ISM Mutation Effect Heatmap (Top ${topN} Sensitive Sites)`,
+                font: { size: 16, weight: 'bold' },
+                color: '#064e3b',
+                padding: { top: 10, bottom: 15 }
+              },
+              tooltip: {
+                mode: 'index',
+                intersect: false,
+                backgroundColor: 'rgba(255,255,255,0.95)',
+                titleColor: '#0f172a',
+                bodyColor: '#0f172a',
+                borderColor: '#e5e7eb',
+                borderWidth: 1,
+                callbacks: {
+                  title: function(context) {
+                    return `Position relative to TSS: ${context[0].label}bp`;
+                  },
+                  label: function(context) {
+                    const val = context.parsed.y;
+                    return `${context.dataset.label}: ${val > 0 ? '+' : ''}${val.toFixed(4)}`;
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                stacked: false,
+                title: { display: true, text: 'Position relative to TSS (bp)', color: '#64748b', font: {size: 13} },
+                ticks: { 
+                  color: '#64748b',
+                  maxRotation: 45,
+                  minRotation: 0,
+                  autoSkip: true,
+                  maxTicksLimit: 20
+                },
+                grid: { color: 'rgba(229, 231, 235, 0.5)' }
+              },
+              y: {
+                stacked: false,
+                title: { display: true, text: 'Mutation Effect Value', color: '#64748b', font: {size: 13} },
+                ticks: { color: '#64748b' },
+                grid: { color: 'rgba(229, 231, 235, 0.8)' }
+              }
+            },
+            interaction: {
+              mode: 'index',
+              intersect: false
+            }
+          }
+        });
+        
+        console.log('[renderISMHeatmap] Chart creation complete');
+      }
+
+      function showTopMutations(effects, bases, importance){
+        const positions = Array.from({length: bases.length}, (_, i) => i - 2000);
+        const topN = 20;
+        const sorted = importance.map((v, i) => ({v, i, pos: positions[i], base: bases[i]}))
+          .sort((a, b) => b.v - a.v)
+          .slice(0, topN);
+        
+        const baseLabels = ['A', 'T', 'C', 'G'];
+        let html = `<h4 style="margin-top:16px;">Top ${topN} Mutation Sensitive Sites</h4>`;
+        html += '<table style="width:100%; border-collapse:collapse; font-size:12px;"><thead><tr>';
+        html += '<th style="text-align:right;">Position</th><th>Original Base</th><th>Sensitivity</th>';
+        html += '<th style="text-align:right;">→A</th><th style="text-align:right;">→T</th>';
+        html += '<th style="text-align:right;">→C</th><th style="text-align:right;">→G</th></tr></thead><tbody>';
+        
+        for(const item of sorted){
+          const eff = effects[item.i];
+          html += '<tr>';
+          html += `<td style="text-align:right;">${item.pos}</td>`;
+          html += `<td style="font-weight:bold;">${item.base}</td>`;
+          html += `<td style="text-align:right;">${item.v.toFixed(4)}</td>`;
+          for(let j = 0; j < 4; j++){
+            const val = eff[j];
+            const color = val > 0 ? '#ef4444' : (val < 0 ? '#3b82f6' : '#64748b');
+            html += `<td style="text-align:right; color:${color};">${val > 0 ? '+' : ''}${val.toFixed(4)}</td>`;
+          }
+          html += '</tr>';
+        }
+        html += '</tbody></table>';
+        document.getElementById('ismResults').innerHTML = html;
+      }
+
+      function exportISMCSV(effects, bases, importance, base_pred){
+        const TSS_OFFSET = 2000;
+        const header = 'position_rel,original_base,importance,effect_to_A,effect_to_T,effect_to_C,effect_to_G';
+        const rows = [header];
+        
+        for(let i = 0; i < bases.length; i++){
+          const pos = i - TSS_OFFSET;
+          const base = bases[i];
+          const imp = importance[i];
+          const eff = effects[i];
+          rows.push(`${pos},${base},${imp.toFixed(6)},${eff[0].toFixed(6)},${eff[1].toFixed(6)},${eff[2].toFixed(6)},${eff[3].toFixed(6)}`);
+        }
+        
+        const blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `ism_effects_${new Date().getTime()}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      // 通用图表导出为PNG函数
+      function exportChartToPNG(canvasId, filename) {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) {
+          alert('图表未找到');
+          return;
+        }
+        
+        // 创建临时canvas，添加白色背景
+        const tempCanvas = document.createElement('canvas');
+        const ctx = tempCanvas.getContext('2d');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        
+        // 填充白色背景
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+        
+        // 绘制原图表
+        ctx.drawImage(canvas, 0, 0);
+        
+        // 导出
+        const link = document.createElement('a');
+        link.href = tempCanvas.toDataURL('image/png');
+        link.download = `${filename}_${new Date().getTime()}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      // ISM热图导出PNG
+      function exportISMPNG() {
+        exportChartToPNG('ismHeatmap', 'ism_heatmap');
+      }
+
+      // Occlusion图表导出PNG
+      function exportOcclusionPNG() {
+        exportChartToPNG('peakChart', 'occlusion_importance');
+      }
+
+      // CRE Scan图表导出PNG
+      function exportCREPNG() {
+        exportChartToPNG('scanChart', 'cre_scan');
+      }
+
+      document.getElementById('btnPredict').addEventListener('click', predict);
+      document.getElementById('btnExplain').addEventListener('click', explain);
+      document.getElementById('btnExplainISM').addEventListener('click', explainISM);
+      document.getElementById('btnScanCRE').addEventListener('click', scanCRE);
+      document.getElementById('btnExportCSV').addEventListener('click', ()=>{
+        if(currentImportanceData && currentSequence){
+          exportToCSV(currentImportanceData, currentSequence);
+        }
+      });
+      document.getElementById('btnExportOcclusionPNG').addEventListener('click', ()=>{
+        exportOcclusionPNG();
+      });
+      document.getElementById('btnClear').addEventListener('click', ()=>{ 
+        document.getElementById('seq').value=''; 
+        document.getElementById('msg').textContent='-'; 
+        document.getElementById('pred').textContent='-'; 
+        const metaEl = document.getElementById('meta'); if(metaEl){ metaEl.textContent='-'; }
+        document.getElementById('explainStats').textContent='-';
+        document.getElementById('chartContainer').style.display='none';
+        document.getElementById('btnExportCSV').style.display='none';
+        document.getElementById('btnExportOcclusionPNG').style.display='none';
+        document.getElementById('explainSeq').textContent='-';
+        if(peakChart){ peakChart.destroy(); peakChart = null; }
+        currentImportanceData = null;
+        currentSequence = null;
+        updateSeqInfo();
+      })
+      document.getElementById('btnPaste')?.addEventListener('click', async ()=>{
+        try{ const txt = await navigator.clipboard.readText(); document.getElementById('seq').value = txt || ''; updateSeqInfo(); }
+        catch(e){ document.getElementById('msg').textContent='Cannot read from clipboard'; }
+      });
+      document.getElementById('btnDemo')?.addEventListener('click', ()=>{
+        const demo = '>demo\n' + 'ACGT'.repeat(50);
+        document.getElementById('seq').value = demo;
+        updateSeqInfo();
+      });
+      document.getElementById('seq').addEventListener('input', updateSeqInfo);
+
+      // (HTML export removed) Only CSV export retained
+
+      // Simple navigation: highlight current tab based on hash and scroll to corresponding section
+      function setActiveNav(){
+        const hash = (location.hash||'#home').replace('#','');
+        const ids=['home','predict','explain','scan'];
+        ids.forEach(id=>{
+          const nav = document.getElementById('nav-'+id);
+          if(nav){ nav.classList.toggle('active', id===hash); }
+        });
+      }
+      function bindNav(){
+        const elHome = document.getElementById('nav-home');
+        elHome?.addEventListener('click', (e)=>{ e.preventDefault(); location.hash='#home'; });
+        document.getElementById('nav-predict')?.addEventListener('click', (e)=>{ e.preventDefault(); location.hash='#predict'; });
+        document.getElementById('nav-explain')?.addEventListener('click', (e)=>{ e.preventDefault(); location.hash='#explain'; });
+        document.getElementById('nav-scan')?.addEventListener('click', (e)=>{ e.preventDefault(); location.hash='#scan'; });
+        window.addEventListener('hashchange', ()=>{ setActiveNav(); const hash=(location.hash||'#home').replace('#',''); showSection(hash); });
+        const hash=(location.hash||'#home').replace('#',''); showSection(hash); setActiveNav();
+      }
+      function showSection(name){
+        const ids=['home','predict','explain','scan'];
+        ids.forEach(id=>{
+          const el = document.getElementById('sec-'+id);
+          if(el){ el.style.display = (id===name? 'block':'none'); }
+          const nav = document.getElementById('nav-'+id);
+          if(nav){ nav.classList.toggle('active', id===name); }
+        });
+        // Control home page visibility
+        const homeEl = document.getElementById('home');
+        if(homeEl){ homeEl.style.display = (name==='home' ? 'block' : 'none'); }
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+      bindNav();
+      updateSeqInfo();
+      document.getElementById('btnTheme')?.addEventListener('click', toggleTheme);
+      setTheme(localStorage.getItem('theme')||'light');
+    </script>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <!-- Institution Logo -->
+        <div class="footer-logo-section">
+          <img src="./images/institution_logo.png" alt="Agricultural Information Institute of CAAS | National Nanfan Research Institute of CAAS" class="footer-institution-logo">
+        </div>
+
+        <div class="footer-info">
+          <p>Developed by Agricultural Information Institute of CAAS & National Nanfan Research Institute of CAAS</p>
+        </div>
+        <div class="footer-links">
+          <a href="https://nfy.caas.cn/" target="_blank" rel="noopener">NFRI</a>
+          <span class="divider">|</span>
+          <a href="mailto:liuhuan01@139.com">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      .site-footer {
+        background: linear-gradient(135deg, #134e4a 0%, #0f766e 50%, #115e59 100%);
+        color: rgba(255,255,255,0.95);
+        padding: 48px 24px;
+        margin-top: 64px;
+        position: relative;
+      }
+      .site-footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(94, 234, 212, 0.3), transparent);
+      }
+      .footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        text-align: center;
+      }
+      .footer-info {
+        font-size: 13px;
+        line-height: 1.8;
+        color: rgba(255,255,255,0.85);
+      }
+      .footer-links {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+      .footer-links a {
+        color: #5eead4;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        transition: all var(--transition);
+        padding: 6px 12px;
+        border-radius: 6px;
+      }
+      .footer-links a:hover {
+        color: #fff;
+        background: rgba(255,255,255,0.1);
+      }
+      .footer-links .divider {
+        color: rgba(255,255,255,0.25);
+        font-size: 12px;
+      }
+      body.dark .site-footer {
+        background: linear-gradient(135deg, #0f1f1d 0%, #134e4a 100%);
+      }
+      .footer-logo-section {
+        margin-bottom: 12px;
+      }
+      .footer-institution-logo {
+        max-width: 420px;
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        background: #fff;
+        padding: 14px 24px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        transition: transform var(--transition);
+      }
+      .footer-institution-logo:hover {
+        transform: scale(1.02);
+      }
+      @media (max-width: 768px) {
+        .site-footer { padding: 36px 20px; }
+        .footer-institution-logo {
+          max-width: 85%;
+          padding: 10px 16px;
+        }
+        .footer-links { gap: 8px; }
+        .footer-links a { padding: 4px 8px; font-size: 12px; }
+      }
+    </style>
+  </body>
+  </html>
+
+

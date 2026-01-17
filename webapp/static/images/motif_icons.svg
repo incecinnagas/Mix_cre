@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 160" width="480" height="160">
+  <style>
+    .card { filter: drop-shadow(0 3px 8px rgba(2,6,23,0.15)); }
+    .label { font: 700 14px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; fill: #0f172a; }
+    .sub { font: 500 11px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; fill: #64748b; }
+  </style>
+  <!-- TATA icon -->
+  <g transform="translate(20,20)">
+    <rect class="card" x="0" y="0" rx="12" width="120" height="120" fill="#ffffff" stroke="#e5e7eb"/>
+    <text class="label" x="16" y="28">TATA</text>
+    <text class="sub" x="16" y="46">core promoter</text>
+    <g transform="translate(12,64)" fill="#3b82f6">
+      <rect x="0" y="0" width="20" height="12" rx="3"/>
+      <rect x="26" y="0" width="28" height="12" rx="3"/>
+      <rect x="58" y="0" width="20" height="12" rx="3"/>
+      <rect x="84" y="0" width="20" height="12" rx="3"/>
+    </g>
+  </g>
+  <!-- GC box icon -->
+  <g transform="translate(180,20)">
+    <rect class="card" x="0" y="0" rx="12" width="120" height="120" fill="#ffffff" stroke="#e5e7eb"/>
+    <text class="label" x="16" y="28">GC box</text>
+    <text class="sub" x="16" y="46">SP1 cluster</text>
+    <g transform="translate(12,64)">
+      <rect x="0" y="0" width="12" height="12" rx="3" fill="#10b981"/>
+      <rect x="18" y="0" width="12" height="12" rx="3" fill="#10b981"/>
+      <rect x="36" y="0" width="12" height="12" rx="3" fill="#10b981"/>
+      <rect x="54" y="0" width="12" height="12" rx="3" fill="#10b981"/>
+      <rect x="72" y="0" width="12" height="12" rx="3" fill="#10b981"/>
+      <rect x="90" y="0" width="12" height="12" rx="3" fill="#10b981"/>
+    </g>
+  </g>
+  <!-- Hyena/Mamba icon (long-range) -->
+  <g transform="translate(340,20)">
+    <rect class="card" x="0" y="0" rx="12" width="120" height="120" fill="#ffffff" stroke="#e5e7eb"/>
+    <text class="label" x="16" y="28">SSM</text>
+    <text class="sub" x="16" y="46">long-range</text>
+    <path d="M10,84 C30,64 50,104 70,84 C90,64 110,104 130,84" fill="none" stroke="#f59e0b" stroke-width="6"/>
+  </g>
+</svg>

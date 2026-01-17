@@ -1,0 +1,26 @@
+# 最简单的运行方式
+
+## Windows:
+```bash
+# 在项目根目录（F:\Program_Files\Evo2）执行
+python -m uvicorn webapp.api:app --host 0.0.0.0 --port 8000
+```
+
+## Linux/Mac:
+```bash
+# 在项目根目录执行
+python -m uvicorn webapp.api:app --host 0.0.0.0 --port 8000
+```
+
+## 或者使用启动脚本:
+- Windows: `webapp\run.bat`
+- Linux/Mac: `python webapp/run.py`
+
+## 如果遇到问题，请检查:
+1. 确保在项目根目录运行（包含 evo2_mix 和 webapp 文件夹的目录）
+2. 已安装依赖: `pip install fastapi uvicorn pydantic numpy torch`
+3. 模型文件存在: `results/best.ckpt` 或 `results/checkpoints/best.ckpt`
+
+
+
+
